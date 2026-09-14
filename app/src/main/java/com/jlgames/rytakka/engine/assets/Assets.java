@@ -35,6 +35,13 @@ public class Assets {
 
         bitmapit.put("tausta", getBitmapFromAsset(context, "kuvat/taustat/tausta.png"));
         bitmapit.put("taistelija", getBitmapFromAsset(context, "kuvat/hahmot/taistelija.png"));
+        bitmapit.put("taistelija_punainen", getBitmapFromAsset(context, "kuvat/hahmot/taistelija_punainen.png"));
+        bitmapit.put("taistelija_sininen", getBitmapFromAsset(context, "kuvat/hahmot/taistelija_sininen.png"));
+        bitmapit.put("taistelija_vihreä", getBitmapFromAsset(context, "kuvat/hahmot/taistelija_vihreä.png"));
+        bitmapit.put("taistelija_keltainen", getBitmapFromAsset(context, "kuvat/hahmot/taistelija_keltainen.png"));
+        bitmapit.put("raunio", getBitmapFromAsset(context, "kuvat/rakennelmat/raunio.png"));
+        bitmapit.put("linnake", getBitmapFromAsset(context, "kuvat/rakennelmat/linnake.png"));
+        bitmapit.put("torni", getBitmapFromAsset(context, "kuvat/rakennelmat/torni.png"));
 
         musat.put("keimo_valikko", getMediaFromAsset(context, "äänet/musat/keimo_valikko.mp3", true, 0.5f));
 
@@ -48,6 +55,13 @@ public class Assets {
         tekstuurit.put("virhe", new Tekstuuri());
         tekstuurit.put("tausta", new Tekstuuri(bitmapit.get("tausta")));
         tekstuurit.put("taistelija", new Tekstuuri(bitmapit.get("taistelija")));
+        tekstuurit.put("taistelija_punainen", new Tekstuuri(bitmapit.get("taistelija_punainen")));
+        tekstuurit.put("taistelija_sininen", new Tekstuuri(bitmapit.get("taistelija_sininen")));
+        tekstuurit.put("taistelija_vihreä", new Tekstuuri(bitmapit.get("taistelija_vihreä")));
+        tekstuurit.put("taistelija_keltainen", new Tekstuuri(bitmapit.get("taistelija_keltainen")));
+        tekstuurit.put("raunio", new Tekstuuri(bitmapit.get("raunio")));
+        tekstuurit.put("linnake", new Tekstuuri(bitmapit.get("linnake")));
+        tekstuurit.put("torni", new Tekstuuri(bitmapit.get("torni")));
     }
 
     public static Renderöitävä annaTekstuuri(String nimi) {

@@ -2,24 +2,46 @@ package com.jlgames.rytakka.peli.hahmot;
 
 import com.jlgames.rytakka.engine.grafiikat.Renderöitävä;
 import com.jlgames.rytakka.engine.grafiikat.Shader;
-import com.jlgames.rytakka.engine.grafiikat.komponentit.Komponentti;
+import com.jlgames.rytakka.engine.grafiikat.komponentit.KlikattavaObjekti;
 
-public abstract class Pelihahmo extends Komponentti {
+public abstract class Pelihahmo extends KlikattavaObjekti {
 
     int hp;
+    int maxHP;
     int damage;
     float nopeus;
     float sijX, sijY;
     float kohdeX, kohdeY;
+    float alkuSijX, alkuSijY;
     Renderöitävä tekstuuri;
+    int tiimi; // Mille tiimille hahmo kuuluu.
 
-    public Pelihahmo() {
-        this.sijX = 0;
-        this.sijY = 0;
-        this.kohdeX = 0;
-        this.kohdeY = 0;
+    public Pelihahmo(int tiimi) {
+        this.tiimi = 0;
         this.matrixScaleX = 0.08f;
         this.matrixScaleY = 0.08f;
+        switch (tiimi) {
+            case 0:
+                this.alkuSijX = -0.7f;
+                this.alkuSijY = -0.75f;
+            break;
+            case 1:
+                this.alkuSijX = 0.7f;
+                this.alkuSijY = -0.75f;
+            break;
+            case 2:
+                this.alkuSijX = -0.7f;
+                this.alkuSijY = 0.75f;
+            break;
+            case 3:
+                this.alkuSijX = 0.7f;
+                this.alkuSijY = 0.75f;
+            break;
+        }
+        this.sijX = alkuSijX;
+        this.sijY = alkuSijY;
+        this.kohdeX = alkuSijX;
+        this.kohdeY = alkuSijY;
     }
 
     public void asetaKohde(float x, float y) {
