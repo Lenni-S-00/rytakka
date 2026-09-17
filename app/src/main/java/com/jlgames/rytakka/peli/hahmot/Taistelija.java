@@ -9,19 +9,7 @@ public class Taistelija extends Pelihahmo {
         super.hp = 1;
         super.damage = 1;
         super.nopeus = 0.02f;
-        switch (tiimi) {
-            case 0:
-                super.tekstuuri = Assets.annaTekstuuri("taistelija_punainen");
-            break;
-            case 1:
-                super.tekstuuri = Assets.annaTekstuuri("taistelija_sininen");
-            break;
-            case 2:
-                super.tekstuuri = Assets.annaTekstuuri("taistelija_vihreä");
-            break;
-            case 3:
-                super.tekstuuri = Assets.annaTekstuuri("taistelija_keltainen");
-            break;
-        }
+        super.tekstuuri = Assets.annaTekstuuri("taistelija");
+        super.hinta = 1;
     }
 }

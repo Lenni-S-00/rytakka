@@ -4,44 +4,67 @@ import com.jlgames.rytakka.engine.grafiikat.Renderöitävä;
 import com.jlgames.rytakka.engine.grafiikat.Shader;
 import com.jlgames.rytakka.engine.grafiikat.komponentit.KlikattavaObjekti;
 
+import java.util.Random;
+
 public abstract class Pelihahmo extends KlikattavaObjekti {
 
     int hp;
     int maxHP;
-    int damage;
+    public int damage;
     float nopeus;
+    int hinta;
     float sijX, sijY;
     float kohdeX, kohdeY;
     float alkuSijX, alkuSijY;
     Renderöitävä tekstuuri;
     int tiimi; // Mille tiimille hahmo kuuluu.
+    private Random random = new Random();
 
     public Pelihahmo(int tiimi) {
-        this.tiimi = 0;
+        this.tiimi = tiimi;
+        this.hinta = 5;
         this.matrixScaleX = 0.08f;
         this.matrixScaleY = 0.08f;
+        float randomSpawnSijaintiHajontaX = random.nextFloat()/5f;
+        float randomSpawnSijaintiHajontaY = random.nextFloat()/5f;
         switch (tiimi) {
             case 0:
-                this.alkuSijX = -0.7f;
-                this.alkuSijY = -0.75f;
+                this.alkuSijX = -0.7f + randomSpawnSijaintiHajontaX;
+                this.alkuSijY = -0.6f + randomSpawnSijaintiHajontaY;
             break;
             case 1:
                 this.alkuSijX = 0.7f;
-                this.alkuSijY = -0.75f;
+                this.alkuSijY = -0.6f;
             break;
             case 2:
                 this.alkuSijX = -0.7f;
-                this.alkuSijY = 0.75f;
+                this.alkuSijY = 0.6f;
             break;
             case 3:
                 this.alkuSijX = 0.7f;
-                this.alkuSijY = 0.75f;
+                this.alkuSijY = 0.6f;
             break;
         }
         this.sijX = alkuSijX;
         this.sijY = alkuSijY;
         this.kohdeX = alkuSijX;
         this.kohdeY = alkuSijY;
+    }
+
+    public int tiimi() {
+        return tiimi;
+    }
+
+    public int annaHP() {
+        return hp;
+    }
+
+    public int annaDmg() {
+        return damage;
+    }
+
+    public int annaHinta() {
+        return hinta;
     }
 
     public void asetaKohde(float x, float y) {
@@ -76,6 +99,11 @@ public abstract class Pelihahmo extends KlikattavaObjekti {
         tekstuuri.bind(0);
         this.matrixOffsetX = sijX;
         this.matrixOffsetY = sijY;
+        switch (tiimi) {
+            case 0:
+                shader.setColor(new float[]{0.5f, 0, 0, 0});
+            break;
+        }
         super.piirrä(shader);
     }
 }

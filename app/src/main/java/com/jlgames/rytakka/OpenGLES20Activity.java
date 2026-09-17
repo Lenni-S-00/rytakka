@@ -1,6 +1,7 @@
 package com.jlgames.rytakka;
 
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 
@@ -13,6 +14,7 @@ public class OpenGLES20Activity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         gLView = new GLSurfaceViewR(this);
         setContentView(gLView);
         // Assettien lataus assets-kansioista tehdään Activity-luokassa, koska konteksti vaaditaan.

@@ -25,7 +25,37 @@ public class Komponentti {
     protected float matrixRotX = 0;
     protected float matrixRotY = 0;
     protected float matrixRotZ = 0;
-    protected float[] väri = {0f, 0f, 0f, 1f};
+    protected float[] väri = {0f, 0f, 0f, 0f};
+
+    public float offsetX() {
+        return matrixOffsetX;
+    }
+    public float offsetY() {
+        return matrixOffsetY;
+    }
+    public float skaalaX() {
+        return matrixScaleX;
+    }
+    public float skaalaY() {
+        return matrixScaleY;
+    }
+
+    public void päivitäSijainti(float offsetX, float offsetY) {
+        this.matrixOffsetX = offsetX;
+        this.matrixOffsetY = offsetY;
+    }
+
+    public boolean kohdeHitboxinSisällä(float kohdeX, float kohdeY) {
+        if (
+            kohdeX > matrixOffsetX - matrixScaleX/2f &&
+            kohdeX < matrixOffsetX + matrixScaleX/2f &&
+            kohdeY > matrixOffsetY - matrixScaleY/2f &&
+            kohdeY < matrixOffsetY + matrixScaleY/2f
+        ) {
+            return true;
+        }
+        else return false;
+    }
 
     public void piirrä(Shader shader) {
 
@@ -42,10 +72,28 @@ public class Komponentti {
         Matrix.setRotateM(rotMatrix, 0, matrixRotY, 0, 1, 0); // käännä y-akselin suhteen (rotY)
         Matrix.setRotateM(rotMatrix, 0, matrixRotZ, 0, 0, 1); // käännä z-akselin suhteen (rotZ)
         Matrix.multiplyMM(sijaintiMatriisi, 0, sijaintiMatriisi, 0, rotMatrix, 0);
-        //
 
         shader.setLocation(sijaintiMatriisi);
         shader.setColor(väri);
+        shader.setSampler(0);
+        Assets.annaNeliöModel().draw();
+    }
+
+    public void piirräVäri(Shader shader, float[] shaderVäri) {
+        float[] sijaintiMatriisi = new float[16];
+        Matrix.setIdentityM(sijaintiMatriisi, 0);
+        Matrix.translateM(sijaintiMatriisi, 0, matrixOffsetX, matrixOffsetY, 0); // siirrä sijaintia (offset)
+        Matrix.scaleM(sijaintiMatriisi, 0, matrixScaleX, matrixScaleY, 1); // muuta kokoa (scale)
+
+        float[] rotMatrix = new float[16];
+        Matrix.setIdentityM(rotMatrix, 0);
+        Matrix.setRotateM(rotMatrix, 0, matrixRotX, 1, 0, 0); // käännä x-akselin suhteen (rotX)
+        Matrix.setRotateM(rotMatrix, 0, matrixRotY, 0, 1, 0); // käännä y-akselin suhteen (rotY)
+        Matrix.setRotateM(rotMatrix, 0, matrixRotZ, 0, 0, 1); // käännä z-akselin suhteen (rotZ)
+        Matrix.multiplyMM(sijaintiMatriisi, 0, sijaintiMatriisi, 0, rotMatrix, 0);
+
+        shader.setLocation(sijaintiMatriisi);
+        shader.setColor(shaderVäri);
         shader.setSampler(0);
         Assets.annaNeliöModel().draw();
     }

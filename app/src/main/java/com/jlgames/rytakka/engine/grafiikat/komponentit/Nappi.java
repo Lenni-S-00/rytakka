@@ -1,10 +1,15 @@
 package com.jlgames.rytakka.engine.grafiikat.komponentit;
 
-import com.jlgames.rytakka.engine.assets.Assets;
-import com.jlgames.rytakka.engine.grafiikat.Shader;
-import com.jlgames.rytakka.peli.Peli;
+import com.jlgames.rytakka.engine.grafiikat.Renderöitävä;
 
-public abstract class KlikattavaObjekti extends Komponentti {
+public class Nappi extends HUDKomponentti {
+    public Nappi(Renderöitävä tekstuuri) {
+        super(tekstuuri);
+    }
+
+    public Nappi(float skaalaX, float skaalaY, float offsetX, float offsetY, Renderöitävä tekstuuri) {
+        super(skaalaX, skaalaY, offsetX, offsetY, tekstuuri);
+    }
 
     public boolean tarkistaKlikkaus(float kosketusX, float kosketusY, float leveys, float korkeus) {
         float kohdeX = haeRuutuKoordinaatti(kosketusX, leveys);
@@ -22,14 +27,5 @@ public abstract class KlikattavaObjekti extends Komponentti {
 
     private float haeRuutuKoordinaatti(float kosketusKoordinaatti, float ruudunKoko) {
         return -1f + (kosketusKoordinaatti/ruudunKoko)*2f;
-    }
-
-    @Override
-    public void piirrä(Shader shader) {
-        super.piirrä(shader);
-        if (Peli.valittuObjekti != null && Peli.valittuObjekti.equals(this)) {
-            Assets.annaTekstuuri("hud_valitun_ääriviivat").bind(0);
-            Assets.annaNeliöModel().draw();
-        }
     }
 }

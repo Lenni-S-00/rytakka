@@ -15,6 +15,9 @@ public class Peli {
 
     public static ArrayList<Pelaaja> pelaajat = new ArrayList<>(); // Varmaan aina 4 pelaajaa mut teoriassa voi olla enemmän
     public static KlikattavaObjekti valittuObjekti; // Vain 1 asia kerrallaan voi olla valittu. Toiminnot tehdään sen perusteella.
+    public static boolean peliOhi = false;
+    public static int voittaja = -1; // Voittanut tiimi (-1: voittaja = world)
+    public static int peliTick = 0;
 
     public static void luoPeli() {
         // Jotain tarvittavia alkusäätöjä ennen kuin siirrytään pelisilmukkaan.
@@ -27,17 +30,49 @@ public class Peli {
             else botti = true;
             Pelaaja p = new Pelaaja(i, botti);
             p.lisääHahmo(new Taistelija(i));
-            p.lisääRaha(20);
+            p.lisääRaha(50);
             pelaajat.add(p);
         }
     }
 
     public static void peliLoop() {
         // Tähän pelisilmukka
-        for (Pelaaja p : pelaajat) {
-            for (Pelihahmo hahmo : p.hahmotKentällä) {
-                hahmo.liikuKohteeseen();
+        tarkistaPelinTila();
+        if (!peliOhi) {
+            for (Pelaaja p : pelaajat) {
+                for (Pelihahmo hahmo : p.hahmotKentällä) {
+                    hahmo.liikuKohteeseen();
+                }
             }
+
+            // Jos rakennelman hitboxin sisällä on vihollisen taistelija, tee jatkuvasti vahinkoa.
+            for (Pelaaja p : pelaajat) {
+                Rakennelma r = p.rakennelma();
+                for (Pelaaja hahmonTarkistusPelaaja : pelaajat) {
+                    for (Pelihahmo hahmo : hahmonTarkistusPelaaja.hahmotKentällä) {
+                        if (r.kohdeHitboxinSisällä(hahmo.offsetX(), hahmo.offsetY()) && hahmo.tiimi() != r.tiimi()) {
+                            if (peliTick % 60 == 0) {
+                                r.vahingoita(hahmo.annaDmg());
+                            }
+                        }
+                    }
+                }
+            }
+            peliTick++;
+        }
+    }
+
+    private static void tarkistaPelinTila() {
+        ArrayList<Integer> hävinneetPelaajat = new ArrayList<>();
+        for (Pelaaja p : pelaajat) {
+            if (p.rakennelma().annaHp() <= 0) hävinneetPelaajat.add(p.rakennelma().tiimi());
+        }
+        if (hävinneetPelaajat.size() >= pelaajat.size()-1) {
+            peliOhi = true;
+            if (!hävinneetPelaajat.contains(0)) voittaja = 0;
+            else if (!hävinneetPelaajat.contains(1)) voittaja = 1;
+            else if (!hävinneetPelaajat.contains(2)) voittaja = 2;
+            else if (!hävinneetPelaajat.contains(3)) voittaja = 3;
         }
     }
 }

@@ -31,7 +31,7 @@ public class Shader {
                     "uniform vec4 vColor;" +
                     "varying vec2 texCoords;" +
                     "void main() {" +
-                    "    gl_FragColor = texture2D(sampler, texCoords);" +
+                    "    gl_FragColor = texture2D(sampler, texCoords) + vColor;" +
                     "}";
 
     /**
