@@ -8,6 +8,7 @@ import com.jlgames.rytakka.peli.hahmot.Taistelija;
 import com.jlgames.rytakka.peli.rakennelmat.Linnake;
 import com.jlgames.rytakka.peli.rakennelmat.Rakennelma;
 import com.jlgames.rytakka.peli.rakennelmat.Torni;
+import com.jlgames.rytakka.peli.toiminnot.Toiminnot;
 
 import java.util.ArrayList;
 
@@ -44,21 +45,74 @@ public class Peli {
                     hahmo.liikuKohteeseen();
                 }
             }
+            if (peliTick % 5 == 0) { // Vihollisen hakusykli
+                for (Pelaaja p : pelaajat) {
+                    if (p.rakennelma().hyökkääjä() > -1) {
+                        // Puolusta rakennelmaa hyökkäämällä vihollisen hahmoihin takaisin.
+                        Toiminnot.hyökkääVihollisHahmoihin(p.rakennelma().tiimi(), p.rakennelma().hyökkääjä());
+                        // Jos hyökkääjän kaikki hahmot ovat kuolleet, lopeta "puolustushyökkäys".
+                        if (pelaajat.get(p.rakennelma().hyökkääjä()).hahmotKentällä.isEmpty()) {
+                            p.rakennelma().hyökkää(-1);
+                        }
+                    }
+                }
+                // Kerää pois kuolleet viholliset.
+                for (Pelaaja p : pelaajat) {
+                    p.hahmotKentällä.removeIf(hahmo -> hahmo.annaHP() <= 0 && hahmo.annaKuolemaAjastin() <= 0);
+                }
+            }
+            if (peliTick % 30 == 0) { // Tuotantosykli
+                lisääRahat();
+            }
+            if (peliTick % 60 == 0) { // Vahingoitussykli
+                boolean voiVahingoittaaRakennelmaa = true; // Ensin vahingoitetaan aina hahmoja, sitten rakennelmia.
+                // Jos hahmon hitboxin sisällä on vihollisen hahmo, suorita hahmoille kaksintaistelu.
+                for (Pelaaja p : pelaajat) {
+                    for (Pelihahmo p1Hahmo : p.hahmotKentällä) {
+                        for (Pelaaja hahmonTarkistusPelaaja : pelaajat) {
+                            for (Pelihahmo p2Hahmo : hahmonTarkistusPelaaja.hahmotKentällä) {
+                                if (!p.equals(hahmonTarkistusPelaaja)) {
+                                    if (p1Hahmo.kohdeHitboxinSisällä(p2Hahmo.offsetX(), p2Hahmo.offsetY()) && p2Hahmo.tiimi() != p1Hahmo.tiimi()) {
+                                        hahmojenKaksintaistelu(p1Hahmo, p2Hahmo);
+                                        voiVahingoittaaRakennelmaa = false;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
 
-            // Jos rakennelman hitboxin sisällä on vihollisen taistelija, tee jatkuvasti vahinkoa.
-            for (Pelaaja p : pelaajat) {
-                Rakennelma r = p.rakennelma();
-                for (Pelaaja hahmonTarkistusPelaaja : pelaajat) {
-                    for (Pelihahmo hahmo : hahmonTarkistusPelaaja.hahmotKentällä) {
-                        if (r.kohdeHitboxinSisällä(hahmo.offsetX(), hahmo.offsetY()) && hahmo.tiimi() != r.tiimi()) {
-                            if (peliTick % 60 == 0) {
-                                r.vahingoita(hahmo.annaDmg());
+                // Jos rakennelman hitboxin sisällä on vihollisen hahmo, tee jatkuvasti vahinkoa.
+                if (voiVahingoittaaRakennelmaa) {
+                    for (Pelaaja p : pelaajat) {
+                        Rakennelma r = p.rakennelma();
+                        for (Pelaaja hahmonTarkistusPelaaja : pelaajat) {
+                            for (Pelihahmo hahmo : hahmonTarkistusPelaaja.hahmotKentällä) {
+                                if (r.kohdeHitboxinSisällä(hahmo.offsetX(), hahmo.offsetY()) && hahmo.tiimi() != r.tiimi()) {
+                                    r.vahingoita(hahmo.annaDmg());
+                                }
                             }
                         }
                     }
                 }
             }
             peliTick++;
+        }
+    }
+
+    private static void hahmojenKaksintaistelu(Pelihahmo hahmo1, Pelihahmo hahmo2) {
+        if (hahmo1.annaHP() > 0 && hahmo2.annaHP() > 0) {
+            hahmo1.vahingoita(hahmo2.damage);
+            hahmo2.vahingoita(hahmo1.damage);
+        }
+    }
+
+    private static void lisääRahat() {
+        for (Pelaaja p : pelaajat) {
+            if (p.rakennelma().annaHp() > 0) {
+                p.lisääRaha(p.rakennelma().annaTuotto());
+            }
         }
     }
 

@@ -27,6 +27,7 @@ public class HUDKomponentti extends Komponentti {
 
     @Override
     public void piirrä(Shader shader) {
+        shader.bind();
         if (tekstuuri != null) tekstuuri.bind(0);
         else Assets.annaTekstuuri("virhe").bind(0);
         super.piirrä(shader);

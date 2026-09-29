@@ -58,11 +58,27 @@ public class Toiminnot {
     public static void hyökkää(float klikkausX, float klikkausY, float ruudunLeveys, float ruudunKorkeus) {
         if (Peli.valittuObjekti instanceof Rakennelma) {
             Rakennelma rakennelma = (Rakennelma) Peli.valittuObjekti;
+            rakennelma.hyökkää(0);
             float kohdeX = rakennelma.offsetX();
             float kohdeY = rakennelma.offsetY();
             siirräHahmoja(kohdeX, kohdeY);
-            rakennelma.vahingoita(1);
             Peli.valittuObjekti = null;
+        }
+    }
+
+    public static void hyökkääVihollisHahmoihin(int hyökkääjä, int kohde) {
+        Pelaaja h = Peli.pelaajat.get(hyökkääjä);
+        Pelaaja p = Peli.pelaajat.get(kohde);
+        for (Pelihahmo hahmo : h.hahmotKentällä) {
+            // Paranna tätä niin, että hyökkääjä etsii lähimmän kohteen
+            for (int i = 0; i < p.hahmotKentällä.size(); i++) {
+                if (p.hahmotKentällä.get(i).annaHP() > 0) {
+                    float kohdeX = p.hahmotKentällä.get(i).offsetX();
+                    float kohdeY = p.hahmotKentällä.get(i).offsetY();
+                    hahmo.asetaKohde(kohdeX, kohdeY);
+                    break;
+                }
+            }
         }
     }
 

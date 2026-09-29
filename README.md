@@ -2,7 +2,7 @@
 
 ## Peli, jossa rytisee
 
-## Uusin versio (17.9.2026): 0.1
+## Uusin versio (29.9.2026): 0.2
 
 ### **Todo:**
  - Vihollisten speksit: määrittele kaikkien vihollisten statsit, kyvyt jne.
@@ -11,6 +11,11 @@
  - Vihollisille tekoäly, joka yrittää hyökätä pelaajaa vastaan.
  - Mekaniikat rahan keräämiseen, esim. vihollisten tappaminen, rahaa ajan kanssa, kultakaivosrakennelma?
  - Slotteja kentälle, joihin pelaaja ja viholliset voivat rakentaa rakennelmiaan.
+ 
+ ### Versio 0.2
+ - Lisätty vihollisten hahmoihin hyökkääminen. Hahmot puolustavat myös aina omaa rakennelmaa.
+ - Lisätty passiivinen rahantulo.
+ - Lisätty elämäpalkki rakennelmille.
 
 ### Versio 0.1
  - Lisätty uudet hahmot: Tikkujäbä, Luujäbä, Mailajäbä, Isojäbä, Rynnäkköjäbä, Lepakkojäbä, Piikkipallojäbä, Muskelijäbä, Päällikköjäbä ja Juuso.

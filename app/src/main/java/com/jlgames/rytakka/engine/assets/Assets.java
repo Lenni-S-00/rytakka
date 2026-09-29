@@ -67,6 +67,8 @@ public class Assets {
         bitmapit.put("hud_hahmopainike", getBitmapFromAsset(context, "kuvat/hud/painikkeet/hahmopainike.png"));
         bitmapit.put("hud_splash_voitto", getBitmapFromAsset(context, "kuvat/hud/splash/splash_voitto.png"));
         bitmapit.put("hud_splash_häviö", getBitmapFromAsset(context, "kuvat/hud/splash/splash_häviö.png"));
+        bitmapit.put("hud_palkki_punainen", getBitmapFromAsset(context, "kuvat/hud/palkki_punainen.png"));
+        bitmapit.put("hud_palkki_vihreä", getBitmapFromAsset(context, "kuvat/hud/palkki_vihreä.png"));
 
         musat.put("keimo_valikko", getMediaFromAsset(context, "äänet/musat/keimo_valikko.mp3", true, 0.5f));
 
@@ -112,6 +114,8 @@ public class Assets {
         tekstuurit.put("hud_hahmopainike", new Tekstuuri(bitmapit.get("hud_hahmopainike")));
         tekstuurit.put("hud_splash_voitto", new Tekstuuri(bitmapit.get("hud_splash_voitto")));
         tekstuurit.put("hud_splash_häviö", new Tekstuuri(bitmapit.get("hud_splash_häviö")));
+        tekstuurit.put("hud_palkki_punainen", new Tekstuuri(bitmapit.get("hud_palkki_punainen")));
+        tekstuurit.put("hud_palkki_vihreä", new Tekstuuri(bitmapit.get("hud_palkki_vihreä")));
     }
 
     public static Renderöitävä annaTekstuuri(String nimi) {

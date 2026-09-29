@@ -18,6 +18,7 @@ public abstract class Pelihahmo extends KlikattavaObjekti {
     float alkuSijX, alkuSijY;
     Renderöitävä tekstuuri;
     int tiimi; // Mille tiimille hahmo kuuluu.
+    int kuolemaAjastin = 0; // Kuolema-animaatiota varten.
     private Random random = new Random();
 
     public Pelihahmo(int tiimi) {
@@ -49,6 +50,8 @@ public abstract class Pelihahmo extends KlikattavaObjekti {
         this.sijY = alkuSijY;
         this.kohdeX = alkuSijX;
         this.kohdeY = alkuSijY;
+        this.matrixOffsetX = alkuSijX;
+        this.matrixOffsetY = alkuSijY;
     }
 
     public int tiimi() {
@@ -71,6 +74,17 @@ public abstract class Pelihahmo extends KlikattavaObjekti {
         this.kohdeX = x;
         this.kohdeY = y;
     }
+    public int annaKuolemaAjastin() {
+        return kuolemaAjastin;
+    }
+
+    public void vahingoita(int damage) {
+        this.hp -= damage;
+        if (this.hp <= 0) {
+            this.hp = 0;
+            this.kuolemaAjastin = 100;
+        }
+    }
 
     /**
      * Kutsu tätä funktiota joka framessa, jossa hahmoa halutaan liikuttaa.
@@ -92,6 +106,7 @@ public abstract class Pelihahmo extends KlikattavaObjekti {
     /**
      * Piirtofunktio muuten sama kuin Komponentti-luokassa, mutta hahmolle valitaan sen oma tekstuuri
      * sekä hahmon renderöinnin sijainti päivitetään joka framessa liikesijaintiin.
+     * Hahmolle valitaan tiimin mukainen väri shaderilla piirrettäväksi.
      * @param shader shader-ohjelma (nykyisellään käytetään vain vakiota)
      */
     @Override
@@ -99,11 +114,24 @@ public abstract class Pelihahmo extends KlikattavaObjekti {
         tekstuuri.bind(0);
         this.matrixOffsetX = sijX;
         this.matrixOffsetY = sijY;
+        if (this.hp <= 0) this.matrixRotZ = 90;
+        if (this.kuolemaAjastin > 0) this.kuolemaAjastin--;
         switch (tiimi) {
             case 0:
-                shader.setColor(new float[]{0.5f, 0, 0, 0});
+                super.piirräVäri(shader, new float[]{0.5f, 0, 0, 0});
+            break;
+            case 1:
+                super.piirräVäri(shader, new float[]{0f, 0, 0.5f, 0});
+            break;
+            case 2:
+                super.piirräVäri(shader, new float[]{0, 0.5f, 0, 0});
+            break;
+            case 3:
+                super.piirräVäri(shader, new float[]{0.5f, 0.5f, 0, 0});
+            break;
+            default:
+                super.piirrä(shader);
             break;
         }
-        super.piirrä(shader);
     }
 }
