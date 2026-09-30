@@ -1,5 +1,6 @@
 package com.jlgames.rytakka.peli;
 
+import com.jlgames.rytakka.engine.RevenueCatManager;
 import com.jlgames.rytakka.engine.assets.Assets;
 import com.jlgames.rytakka.engine.grafiikat.komponentit.KlikattavaObjekti;
 import com.jlgames.rytakka.engine.media.Äänet;
@@ -29,6 +30,9 @@ public class Peli {
         KEHITTÄJÄRUUTU;
     }
     public static Skene skene = Skene.PÄÄVALIKKO;
+
+    public Peli(RevenueCatManager revenueCatManager) {
+    }
 
     public static void luoPeli() {
         // Jotain tarvittavia alkusäätöjä ennen kuin siirrytään pelisilmukkaan.
