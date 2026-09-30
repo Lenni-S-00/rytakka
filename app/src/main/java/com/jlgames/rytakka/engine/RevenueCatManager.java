@@ -68,7 +68,7 @@ public class RevenueCatManager {
         );
     }
 
-    private void ostaSkinit() {
+    public void ostaSkinit() {
 
         if (skinit == null) {
             Log.e(tag, "Skinit -tuotetta ei ole ladattu");

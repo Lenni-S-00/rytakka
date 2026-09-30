@@ -4,10 +4,7 @@ import com.jlgames.rytakka.engine.assets.Assets;
 import com.jlgames.rytakka.engine.grafiikat.Shader;
 import com.jlgames.rytakka.engine.grafiikat.Teksti;
 import com.jlgames.rytakka.engine.grafiikat.komponentit.HUDKomponentti;
-import com.jlgames.rytakka.engine.grafiikat.komponentit.KlikattavaObjekti;
-import com.jlgames.rytakka.engine.grafiikat.komponentit.Komponentti;
 import com.jlgames.rytakka.engine.grafiikat.komponentit.Nappi;
-import com.jlgames.rytakka.peli.Pelaaja;
 import com.jlgames.rytakka.peli.Peli;
 import com.jlgames.rytakka.peli.hahmot.Isojäbä;
 import com.jlgames.rytakka.peli.hahmot.Juuso;
@@ -37,6 +34,7 @@ public class HUD {
     private static HUDKomponentti hahmotKuvakeLabel = new HUDKomponentti(1/12f, 1/12f, 0/12f, 7/8f, Assets.annaTekstuuri("taistelija"));
     private static Teksti hahmotTeksti = new Teksti("hahmot", 100, 42);
     private static HUDKomponentti hahmotTekstiLabel = new HUDKomponentti(1/12f, 1/12f, 2/12f, 7/8f, hahmotTeksti);
+    private static Nappi mikromaksuSkiniNappi = new Nappi(1/12f, 1/12f, 8/12f, 7/8f, Assets.annaTekstuuri("ostokset_nappi_skini"));
     private static Nappi koulutaHahmojaNappi = new Nappi(1/10f, 1/10f, -1/2f, -7/8f,  Assets.annaTekstuuri("hud_nappi_kouluta"));
     private static Nappi takaisinNappi = new Nappi(1/14f, 1/10f, -11/14f, -7/8f,  Assets.annaTekstuuri("hud_nappi_takaisin"));
     private static Nappi ostaTaistelijaPainike = new Nappi(1/14f, 1/10f, -8/14f, -7/8f,  Assets.annaTekstuuri("taistelija"));
@@ -75,6 +73,9 @@ public class HUD {
             if (pauseNappi.tarkistaKlikkaus(x, y, leveys, korkeus)) {
                 Peli.pause = true;
                 System.out.println("pause");
+            }
+            else if (mikromaksuSkiniNappi.tarkistaKlikkaus(x, y, leveys, korkeus)) {
+                Peli.kauppaKlikattu = true;
             }
             switch (hudValikko) {
                 case RAKENNELMA_OMA_PÄÄVALIKKO:
@@ -187,6 +188,9 @@ public class HUD {
             hahmotKuvakeLabel.piirrä(shader);
             hahmotTeksti.päivitäTeksti("" + Peli.pelaajat.get(0).hahmotKentällä.size());
             hahmotTekstiLabel.piirrä(shader);
+            if (!Peli.skinitAvattu) {
+                mikromaksuSkiniNappi.piirrä(shader);
+            }
 
             // Renderöi näytön alaosan HUD
             if (Peli.valittuObjekti != null) {

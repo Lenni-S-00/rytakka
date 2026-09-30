@@ -2,7 +2,7 @@
 
 ## Peli, jossa rytisee
 
-## Uusin versio (29.9.2026): 0.2
+## Uusin versio (1.10.2026): 0.4
 
 #### **Todo (projektiversio): **
  - Vihollisille tekoäly, joka yrittää hyökätä pelaajaa vastaan.
@@ -11,6 +11,9 @@
  - Tiimien hallinta: Pelaaja voi valita tiimin värin/joukkueen. Hahmot voidaan värikoodata esim. shaderin avulla.
  - Ostovalikkoon hahmojen nimet, hinnat ja indikaattori siihen, onko varaa (muuta harmaaksi jos ei).
  - Slotteja kentälle, joihin pelaaja ja viholliset voivat rakentaa rakennelmiaan.
+ 
+### Versio 0.4
+ - Lisätty RevenueCat ja pelinsisäiset ostot.
  
 ### Versio 0.3
  - Lisätty valikot: päävalikko, pause-valikko, ohjeikkuna ja kehittäjäikkuna.

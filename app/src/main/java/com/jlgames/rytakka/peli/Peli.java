@@ -22,6 +22,8 @@ public class Peli {
     public static boolean pause = false;
     public static int voittaja = -1; // Voittanut tiimi (-1: voittaja = world)
     public static int peliTick = 0;
+    public static boolean skinitAvattu = false;
+    public static boolean kauppaKlikattu = false;
 
     public static enum Skene {
         PÄÄVALIKKO,

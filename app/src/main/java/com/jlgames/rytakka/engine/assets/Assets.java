@@ -79,6 +79,7 @@ public class Assets {
         bitmapit.put("valikko_nappi_takaisin", getBitmapFromAsset(context, "kuvat/hud/nappi_päävalikko_takaisin.png"));
         bitmapit.put("valikko_nappi_jatka", getBitmapFromAsset(context, "kuvat/hud/nappi_jatka.png"));
         bitmapit.put("valikko_nappi_päävalikkoon", getBitmapFromAsset(context, "kuvat/hud/nappi_päävalikkoon.png"));
+        bitmapit.put("ostokset_nappi_skini", getBitmapFromAsset(context, "kuvat/hud/nappi_osta_skini.png"));
 
         musat.put("keimo_valikko", getMediaFromAsset(context, "äänet/musat/keimo_valikko.mp3", true, 0.5f));
 
@@ -136,6 +137,7 @@ public class Assets {
         tekstuurit.put("valikko_nappi_takaisin", new Tekstuuri(bitmapit.get("valikko_nappi_takaisin")));
         tekstuurit.put("valikko_nappi_jatka", new Tekstuuri(bitmapit.get("valikko_nappi_jatka")));
         tekstuurit.put("valikko_nappi_päävalikkoon", new Tekstuuri(bitmapit.get("valikko_nappi_päävalikkoon")));
+        tekstuurit.put("ostokset_nappi_skini", new Tekstuuri(bitmapit.get("ostokset_nappi_skini")));
     }
 
     public static Renderöitävä annaTekstuuri(String nimi) {
