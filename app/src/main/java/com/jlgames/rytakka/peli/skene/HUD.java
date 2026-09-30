@@ -30,12 +30,13 @@ public class HUD {
     // Nää kannattaa varmaan laittaa useaan luokkaan sit kun näitä rupeaa tuleen enemmän.
     private static HUDKomponentti hudYläPohja = new HUDKomponentti(1, -1/8f, 0, 7/8f, Assets.annaTekstuuri("hud_pohja"));
     private static HUDKomponentti hudAlaPohja = new HUDKomponentti(1, 1/8f, 0, -7/8f, Assets.annaTekstuuri("hud_pohja"));
-    private static HUDKomponentti rahaKuvakeLabel = new HUDKomponentti(1/12f, 1/12f, -6/12f, 7/8f, Assets.annaTekstuuri("hud_raha"));
+    private static Nappi pauseNappi = new Nappi(1/12f, 1/12f, -8/12f, 7/8f, Assets.annaTekstuuri("hud_nappi_pause"));
+    private static HUDKomponentti rahaKuvakeLabel = new HUDKomponentti(1/12f, 1/12f, -4/12f, 7/8f, Assets.annaTekstuuri("hud_raha"));
     private static Teksti rahaTeksti = new Teksti("raha", 100, 42);
-    private static HUDKomponentti rahaTekstiLabel = new HUDKomponentti(1/12f, 1/12f, -4/12f, 7/8f, rahaTeksti);
-    private static HUDKomponentti hahmotKuvakeLabel = new HUDKomponentti(1/12f, 1/12f, -2/12f, 7/8f, Assets.annaTekstuuri("taistelija"));
+    private static HUDKomponentti rahaTekstiLabel = new HUDKomponentti(1/12f, 1/12f, -2/12f, 7/8f, rahaTeksti);
+    private static HUDKomponentti hahmotKuvakeLabel = new HUDKomponentti(1/12f, 1/12f, 0/12f, 7/8f, Assets.annaTekstuuri("taistelija"));
     private static Teksti hahmotTeksti = new Teksti("hahmot", 100, 42);
-    private static HUDKomponentti hahmotTekstiLabel = new HUDKomponentti(1/12f, 1/12f, 0, 7/8f, hahmotTeksti);
+    private static HUDKomponentti hahmotTekstiLabel = new HUDKomponentti(1/12f, 1/12f, 2/12f, 7/8f, hahmotTeksti);
     private static Nappi koulutaHahmojaNappi = new Nappi(1/10f, 1/10f, -1/2f, -7/8f,  Assets.annaTekstuuri("hud_nappi_kouluta"));
     private static Nappi takaisinNappi = new Nappi(1/14f, 1/10f, -11/14f, -7/8f,  Assets.annaTekstuuri("hud_nappi_takaisin"));
     private static Nappi ostaTaistelijaPainike = new Nappi(1/14f, 1/10f, -8/14f, -7/8f,  Assets.annaTekstuuri("taistelija"));
@@ -51,6 +52,7 @@ public class HUD {
     private static Nappi ostaJuusoPainike = new Nappi(1/14f, 1/10f, 12/14f, -7/8f,  Assets.annaTekstuuri("Juuso_lippis"));
     private static HUDKomponentti ostoPainikePohja = new HUDKomponentti(1/14f, 1/10f, -1/2f, -7/8f,  Assets.annaTekstuuri("hud_ostopainike_tyhjä"));
     private static Nappi päivitäRakennelmaNappi = new Nappi(1/10f, 1/10f, -2/8f, -7/8f,  Assets.annaTekstuuri("hud_nappi_päivitä_rakennelma"));
+    private static Nappi ostaKaivosNappi = new Nappi(1/10f, 1/10f, -2/8f, -7/8f,  Assets.annaTekstuuri("hud_nappi_osta_kaivos"));
     private static Nappi hyökkääNappi = new Nappi(1/10f, 1/10f, -1/2f, -7/8f,  Assets.annaTekstuuri("hud_nappi_hyökkää"));
 
     public static enum Valikot {
@@ -63,107 +65,112 @@ public class HUD {
 
     public static void tarkistaKosketus(float x, float y, float leveys, float korkeus) {
         // Tähän kaikki HUD-valikoiden ja nappien toiminnot.
-        switch (hudValikko) {
-            case RAKENNELMA_OMA_PÄÄVALIKKO:
-                if (koulutaHahmojaNappi.tarkistaKlikkaus(x, y, leveys, korkeus)) {
-                    hudValikko = Valikot.RAKENNELMA_OMA_HAHMOT;
-                }
-                else if (päivitäRakennelmaNappi.tarkistaKlikkaus(x, y, leveys, korkeus)) {
-                    hudValikko = Valikot.RAKENNELMA_OMA_PÄIVITYS;
-                }
-            break;
-            case RAKENNELMA_OMA_HAHMOT:
-                if (takaisinNappi.tarkistaKlikkaus(x, y, leveys, korkeus)) {
-                    hudValikko = Valikot.RAKENNELMA_OMA_PÄÄVALIKKO;
-                }
-                else if (ostaTaistelijaPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
-                    Pelihahmo h = new Taistelija(0);
-                    if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
-                        Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
-                        Peli.pelaajat.get(0).lisääHahmo(h);
+        if (Peli.peliOhi) {
+            VoittoSplash.tarkistaNapit(x, y, leveys, korkeus);
+        }
+        else if (Peli.pause) {
+            PauseValikko.tarkistaNapit(x, y, leveys, korkeus);
+        }
+        else {
+            if (pauseNappi.tarkistaKlikkaus(x, y, leveys, korkeus)) {
+                Peli.pause = true;
+                System.out.println("pause");
+            }
+            switch (hudValikko) {
+                case RAKENNELMA_OMA_PÄÄVALIKKO:
+                    if (koulutaHahmojaNappi.tarkistaKlikkaus(x, y, leveys, korkeus)) {
+                        hudValikko = Valikot.RAKENNELMA_OMA_HAHMOT;
+                    } else if (päivitäRakennelmaNappi.tarkistaKlikkaus(x, y, leveys, korkeus)) {
+                        hudValikko = Valikot.RAKENNELMA_OMA_PÄIVITYS;
                     }
-                }
-                else if (ostaTikkujäbäPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
-                    Pelihahmo h = new Tikkujäbä(0);
-                    if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
-                        Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
-                        Peli.pelaajat.get(0).lisääHahmo(h);
+                    break;
+                case RAKENNELMA_OMA_HAHMOT:
+                    if (takaisinNappi.tarkistaKlikkaus(x, y, leveys, korkeus)) {
+                        hudValikko = Valikot.RAKENNELMA_OMA_PÄÄVALIKKO;
+                    } else if (ostaTaistelijaPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
+                        Pelihahmo h = new Taistelija(0);
+                        if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
+                            Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
+                            Peli.pelaajat.get(0).lisääHahmo(h);
+                        }
+                    } else if (ostaTikkujäbäPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
+                        Pelihahmo h = new Tikkujäbä(0);
+                        if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
+                            Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
+                            Peli.pelaajat.get(0).lisääHahmo(h);
+                        }
+                    } else if (ostaLuujäbäPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
+                        Pelihahmo h = new Luujäbä(0);
+                        if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
+                            Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
+                            Peli.pelaajat.get(0).lisääHahmo(h);
+                        }
+                    } else if (ostaMailajäbäPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
+                        Pelihahmo h = new Mailajäbä(0);
+                        if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
+                            Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
+                            Peli.pelaajat.get(0).lisääHahmo(h);
+                        }
+                    } else if (ostaIsojäbäPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
+                        Pelihahmo h = new Isojäbä(0);
+                        if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
+                            Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
+                            Peli.pelaajat.get(0).lisääHahmo(h);
+                        }
+                    } else if (ostaRynnäkköjäbäPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
+                        Pelihahmo h = new Rynnäkköjäbä(0);
+                        if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
+                            Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
+                            Peli.pelaajat.get(0).lisääHahmo(h);
+                        }
+                    } else if (ostaLepakkojäbäPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
+                        Pelihahmo h = new Lepakkojäbä(0);
+                        if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
+                            Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
+                            Peli.pelaajat.get(0).lisääHahmo(h);
+                        }
+                    } else if (ostaPiikkipallojäbäPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
+                        Pelihahmo h = new Piikkipallojäbä(0);
+                        if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
+                            Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
+                            Peli.pelaajat.get(0).lisääHahmo(h);
+                        }
+                    } else if (ostaMuskelijäbäPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
+                        Pelihahmo h = new Muskelijäbä(0);
+                        if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
+                            Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
+                            Peli.pelaajat.get(0).lisääHahmo(h);
+                        }
+                    } else if (ostaPäällikköjäbäPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
+                        Pelihahmo h = new Päällikköjäbä(0);
+                        if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
+                            Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
+                            Peli.pelaajat.get(0).lisääHahmo(h);
+                        }
+                    } else if (ostaJuusoPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
+                        Pelihahmo h = new Juuso(0);
+                        if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
+                            Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
+                            Peli.pelaajat.get(0).lisääHahmo(h);
+                        }
                     }
-                }
-                else if (ostaLuujäbäPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
-                    Pelihahmo h = new Luujäbä(0);
-                    if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
-                        Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
-                        Peli.pelaajat.get(0).lisääHahmo(h);
+                    break;
+                case RAKENNELMA_OMA_PÄIVITYS:
+                    if (takaisinNappi.tarkistaKlikkaus(x, y, leveys, korkeus)) {
+                        hudValikko = Valikot.RAKENNELMA_OMA_PÄÄVALIKKO;
+                    } else if (ostaKaivosNappi.tarkistaKlikkaus(x, y, leveys, korkeus)) {
+                        if (Peli.pelaajat.get(0).raha() >= 100) {
+                            Peli.pelaajat.get(0).lisääRaha(-100);
+                            Peli.pelaajat.get(0).rakennelma().ostakaivos();
+                        }
                     }
-                }
-                else if (ostaMailajäbäPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
-                    Pelihahmo h = new Mailajäbä(0);
-                    if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
-                        Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
-                        Peli.pelaajat.get(0).lisääHahmo(h);
+                    break;
+                case RAKENNELMA_VIHOLLINEN_PÄÄVALIKKO:
+                    if (hyökkääNappi.tarkistaKlikkaus(x, y, leveys, korkeus)) {
+                        Toiminnot.hyökkää(x, y, leveys, korkeus);
                     }
-                }
-                else if (ostaIsojäbäPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
-                    Pelihahmo h = new Isojäbä(0);
-                    if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
-                        Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
-                        Peli.pelaajat.get(0).lisääHahmo(h);
-                    }
-                }
-                else if (ostaRynnäkköjäbäPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
-                    Pelihahmo h = new Rynnäkköjäbä(0);
-                    if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
-                        Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
-                        Peli.pelaajat.get(0).lisääHahmo(h);
-                    }
-                }
-                else if (ostaLepakkojäbäPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
-                    Pelihahmo h = new Lepakkojäbä(0);
-                    if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
-                        Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
-                        Peli.pelaajat.get(0).lisääHahmo(h);
-                    }
-                }
-                else if (ostaPiikkipallojäbäPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
-                    Pelihahmo h = new Piikkipallojäbä(0);
-                    if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
-                        Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
-                        Peli.pelaajat.get(0).lisääHahmo(h);
-                    }
-                }
-                else if (ostaMuskelijäbäPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
-                    Pelihahmo h = new Muskelijäbä(0);
-                    if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
-                        Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
-                        Peli.pelaajat.get(0).lisääHahmo(h);
-                    }
-                }
-                else if (ostaPäällikköjäbäPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
-                    Pelihahmo h = new Päällikköjäbä(0);
-                    if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
-                        Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
-                        Peli.pelaajat.get(0).lisääHahmo(h);
-                    }
-                }
-                else if (ostaJuusoPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
-                    Pelihahmo h = new Juuso(0);
-                    if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
-                        Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
-                        Peli.pelaajat.get(0).lisääHahmo(h);
-                    }
-                }
-            break;
-            case RAKENNELMA_OMA_PÄIVITYS:
-                if (takaisinNappi.tarkistaKlikkaus(x, y, leveys, korkeus)) {
-                    hudValikko = Valikot.RAKENNELMA_OMA_PÄÄVALIKKO;
-                }
-            break;
-            case RAKENNELMA_VIHOLLINEN_PÄÄVALIKKO:
-                if (hyökkääNappi.tarkistaKlikkaus(x, y, leveys, korkeus)) {
-                    Toiminnot.hyökkää(x, y, leveys, korkeus);
-                }
-            break;
+                    break;
+            }
         }
     }
 
@@ -173,6 +180,7 @@ public class HUD {
 
             // Renderöi näytön yläosan HUD
             hudYläPohja.piirrä(shader);
+            pauseNappi.piirrä(shader);
             rahaKuvakeLabel.piirrä(shader);
             rahaTeksti.päivitäTeksti("" + Peli.pelaajat.get(0).raha());
             rahaTekstiLabel.piirrä(shader);
@@ -238,6 +246,7 @@ public class HUD {
                         break;
                         case RAKENNELMA_OMA_PÄIVITYS:
                             takaisinNappi.piirrä(shader);
+                            ostaKaivosNappi.piirrä(shader);
                         break;
                         case RAKENNELMA_VIHOLLINEN_PÄÄVALIKKO:
                             hyökkääNappi.piirrä(shader);
@@ -247,6 +256,9 @@ public class HUD {
             }
             if (Peli.peliOhi) {
                 VoittoSplash.renderöiVoittoSplash(shader);
+            }
+            else if (Peli.pause) {
+                PauseValikko.renderöiPauseValikko(shader);
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.opengl.GLSurfaceView;
 import android.view.MotionEvent;
 
+import com.jlgames.rytakka.peli.Syöte;
 import com.jlgames.rytakka.peli.toiminnot.Toiminnot;
 
 public class GLSurfaceViewR extends GLSurfaceView {
@@ -52,7 +53,7 @@ public class GLSurfaceViewR extends GLSurfaceView {
                 requestRender();
             break;
             case MotionEvent.ACTION_DOWN:
-                Toiminnot.kosketusToiminto(x, y, leveys, korkeus);
+                Syöte.kosketusToiminto(x, y, leveys, korkeus);
             break;
         }
 

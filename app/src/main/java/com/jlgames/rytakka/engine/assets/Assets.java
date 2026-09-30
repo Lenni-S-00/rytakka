@@ -55,20 +55,30 @@ public class Assets {
         bitmapit.put("torni", getBitmapFromAsset(context, "kuvat/rakennelmat/torni.png"));
         bitmapit.put("hud_pohja", getBitmapFromAsset(context, "kuvat/hud/hud_pohja.png"));
         bitmapit.put("hud_raha", getBitmapFromAsset(context, "kuvat/hud/raha.png"));
+        bitmapit.put("hud_nappi_pause", getBitmapFromAsset(context, "kuvat/hud/nappi_pause_valikko.png"));
         bitmapit.put("hud_nappi_tyhjä", getBitmapFromAsset(context, "kuvat/hud/nappi_tyhjä.png"));
         bitmapit.put("hud_nappi_takaisin", getBitmapFromAsset(context, "kuvat/hud/nappi_takaisin.png"));
         bitmapit.put("hud_nappi_kouluta", getBitmapFromAsset(context, "kuvat/hud/nappi_valikko_hahmot.png"));
         bitmapit.put("hud_nappi_osta_taistelija", getBitmapFromAsset(context, "kuvat/hud/nappi_osta_taistelija.png"));
         bitmapit.put("hud_nappi_osta_taistelija_harmaa", getBitmapFromAsset(context, "kuvat/hud/nappi_osta_taistelija_harmaa.png"));
         bitmapit.put("hud_nappi_päivitä_rakennelma", getBitmapFromAsset(context, "kuvat/hud/nappi_päivitä_rakennelma.png"));
+        bitmapit.put("hud_nappi_osta_kaivos", getBitmapFromAsset(context, "kuvat/hud/nappi_osta_kaivos.png"));
         bitmapit.put("hud_nappi_hyökkää", getBitmapFromAsset(context, "kuvat/hud/nappi_hyökkää.png"));
         bitmapit.put("hud_valitun_ääriviivat", getBitmapFromAsset(context, "kuvat/hud/valitun_objektin_ääriviivat.png"));
         bitmapit.put("hud_ostopainike_tyhjä", getBitmapFromAsset(context, "kuvat/hud/painikkeet/ostopainike_tyhjä.png"));
         bitmapit.put("hud_hahmopainike", getBitmapFromAsset(context, "kuvat/hud/painikkeet/hahmopainike.png"));
+        bitmapit.put("hud_pause_tausta", getBitmapFromAsset(context, "kuvat/hud/splash/pause_tausta.png"));
         bitmapit.put("hud_splash_voitto", getBitmapFromAsset(context, "kuvat/hud/splash/splash_voitto.png"));
         bitmapit.put("hud_splash_häviö", getBitmapFromAsset(context, "kuvat/hud/splash/splash_häviö.png"));
         bitmapit.put("hud_palkki_punainen", getBitmapFromAsset(context, "kuvat/hud/palkki_punainen.png"));
         bitmapit.put("hud_palkki_vihreä", getBitmapFromAsset(context, "kuvat/hud/palkki_vihreä.png"));
+        bitmapit.put("valikko_tausta", getBitmapFromAsset(context, "kuvat/taustat/tausta_päävalikko.png"));
+        bitmapit.put("valikko_nappi_aloita", getBitmapFromAsset(context, "kuvat/hud/nappi_päävalikko_aloita.png"));
+        bitmapit.put("valikko_nappi_ohjeet", getBitmapFromAsset(context, "kuvat/hud/nappi_päävalikko_ohjeet.png"));
+        bitmapit.put("valikko_nappi_kehittäjät", getBitmapFromAsset(context, "kuvat/hud/nappi_päävalikko_kehittäjät.png"));
+        bitmapit.put("valikko_nappi_takaisin", getBitmapFromAsset(context, "kuvat/hud/nappi_päävalikko_takaisin.png"));
+        bitmapit.put("valikko_nappi_jatka", getBitmapFromAsset(context, "kuvat/hud/nappi_jatka.png"));
+        bitmapit.put("valikko_nappi_päävalikkoon", getBitmapFromAsset(context, "kuvat/hud/nappi_päävalikkoon.png"));
 
         musat.put("keimo_valikko", getMediaFromAsset(context, "äänet/musat/keimo_valikko.mp3", true, 0.5f));
 
@@ -102,20 +112,30 @@ public class Assets {
         tekstuurit.put("torni", new Tekstuuri(bitmapit.get("torni")));
         tekstuurit.put("hud_pohja", new Tekstuuri(bitmapit.get("hud_pohja")));
         tekstuurit.put("hud_raha", new Tekstuuri(bitmapit.get("hud_raha")));
+        tekstuurit.put("hud_nappi_pause", new Tekstuuri(bitmapit.get("hud_nappi_pause")));
         tekstuurit.put("hud_nappi_tyhjä", new Tekstuuri(bitmapit.get("hud_nappi_tyhjä")));
         tekstuurit.put("hud_nappi_takaisin", new Tekstuuri(bitmapit.get("hud_nappi_takaisin")));
         tekstuurit.put("hud_nappi_kouluta", new Tekstuuri(bitmapit.get("hud_nappi_kouluta")));
         tekstuurit.put("hud_nappi_osta_taistelija", new Tekstuuri(bitmapit.get("hud_nappi_osta_taistelija")));
         tekstuurit.put("hud_nappi_osta_taistelija_harmaa", new Tekstuuri(bitmapit.get("hud_nappi_osta_taistelija_harmaa")));
         tekstuurit.put("hud_nappi_päivitä_rakennelma", new Tekstuuri(bitmapit.get("hud_nappi_päivitä_rakennelma")));
+        tekstuurit.put("hud_nappi_osta_kaivos", new Tekstuuri(bitmapit.get("hud_nappi_osta_kaivos")));
         tekstuurit.put("hud_nappi_hyökkää", new Tekstuuri(bitmapit.get("hud_nappi_hyökkää")));
         tekstuurit.put("hud_valitun_ääriviivat", new Tekstuuri(bitmapit.get("hud_valitun_ääriviivat")));
         tekstuurit.put("hud_ostopainike_tyhjä", new Tekstuuri(bitmapit.get("hud_ostopainike_tyhjä")));
         tekstuurit.put("hud_hahmopainike", new Tekstuuri(bitmapit.get("hud_hahmopainike")));
+        tekstuurit.put("hud_pause_tausta", new Tekstuuri(bitmapit.get("hud_pause_tausta")));
         tekstuurit.put("hud_splash_voitto", new Tekstuuri(bitmapit.get("hud_splash_voitto")));
         tekstuurit.put("hud_splash_häviö", new Tekstuuri(bitmapit.get("hud_splash_häviö")));
         tekstuurit.put("hud_palkki_punainen", new Tekstuuri(bitmapit.get("hud_palkki_punainen")));
         tekstuurit.put("hud_palkki_vihreä", new Tekstuuri(bitmapit.get("hud_palkki_vihreä")));
+        tekstuurit.put("valikko_tausta", new Tekstuuri(bitmapit.get("valikko_tausta")));
+        tekstuurit.put("valikko_nappi_aloita", new Tekstuuri(bitmapit.get("valikko_nappi_aloita")));
+        tekstuurit.put("valikko_nappi_ohjeet", new Tekstuuri(bitmapit.get("valikko_nappi_ohjeet")));
+        tekstuurit.put("valikko_nappi_kehittäjät", new Tekstuuri(bitmapit.get("valikko_nappi_kehittäjät")));
+        tekstuurit.put("valikko_nappi_takaisin", new Tekstuuri(bitmapit.get("valikko_nappi_takaisin")));
+        tekstuurit.put("valikko_nappi_jatka", new Tekstuuri(bitmapit.get("valikko_nappi_jatka")));
+        tekstuurit.put("valikko_nappi_päävalikkoon", new Tekstuuri(bitmapit.get("valikko_nappi_päävalikkoon")));
     }
 
     public static Renderöitävä annaTekstuuri(String nimi) {

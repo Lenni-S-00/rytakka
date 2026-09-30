@@ -21,6 +21,7 @@ public class Rakennelma extends KlikattavaObjekti {
     int rahanTuotto = 0; // Kuinka paljon rahaa rakennus tuottaa joka syklissä.
     int hyökkääjä = -1; // Kenen tiimi hyökkäsi rakennukseen viimeksi.
     private int efektiAjastin = 0; // Damage-efektiä varten.
+    int kaivokset = 0;
 
     public Rakennelma(int tiimi) {
         this.tuhottu = false;
@@ -58,6 +59,12 @@ public class Rakennelma extends KlikattavaObjekti {
     }
     public int annaTuotto() {
         return rahanTuotto;
+    }
+    public int kaivokset() {
+        return kaivokset;
+    }
+    public void ostakaivos() {
+        kaivokset++;
     }
     public int hyökkääjä() {
         return hyökkääjä;

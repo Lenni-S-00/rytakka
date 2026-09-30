@@ -4,15 +4,20 @@
 
 ## Uusin versio (29.9.2026): 0.2
 
-### **Todo:**
- - Vihollisten speksit: määrittele kaikkien vihollisten statsit, kyvyt jne.
+#### **Todo (projektiversio): **
+ - Vihollisille tekoäly, joka yrittää hyökätä pelaajaa vastaan.
+ 
+#### **Todo (tulevaisuuden versioihin): **
  - Tiimien hallinta: Pelaaja voi valita tiimin värin/joukkueen. Hahmot voidaan värikoodata esim. shaderin avulla.
  - Ostovalikkoon hahmojen nimet, hinnat ja indikaattori siihen, onko varaa (muuta harmaaksi jos ei).
- - Vihollisille tekoäly, joka yrittää hyökätä pelaajaa vastaan.
- - Mekaniikat rahan keräämiseen, esim. vihollisten tappaminen, rahaa ajan kanssa, kultakaivosrakennelma?
  - Slotteja kentälle, joihin pelaaja ja viholliset voivat rakentaa rakennelmiaan.
  
- ### Versio 0.2
+### Versio 0.3
+ - Lisätty valikot: päävalikko, pause-valikko, ohjeikkuna ja kehittäjäikkuna.
+ - Lisätty mahdollisuus ostaa kaivoksia, jotka tuottavat rahaa.
+ - Lisätty statsit pelihahmoille ja rakennelmille.
+ 
+### Versio 0.2
  - Lisätty vihollisten hahmoihin hyökkääminen. Hahmot puolustavat myös aina omaa rakennelmaa.
  - Lisätty passiivinen rahantulo.
  - Lisätty elämäpalkki rakennelmille.

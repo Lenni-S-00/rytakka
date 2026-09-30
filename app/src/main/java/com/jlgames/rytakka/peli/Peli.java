@@ -17,13 +17,28 @@ public class Peli {
     public static ArrayList<Pelaaja> pelaajat = new ArrayList<>(); // Varmaan aina 4 pelaajaa mut teoriassa voi olla enemmän
     public static KlikattavaObjekti valittuObjekti; // Vain 1 asia kerrallaan voi olla valittu. Toiminnot tehdään sen perusteella.
     public static boolean peliOhi = false;
+    public static boolean peliAloitettu = false;
+    public static boolean pause = false;
     public static int voittaja = -1; // Voittanut tiimi (-1: voittaja = world)
     public static int peliTick = 0;
+
+    public static enum Skene {
+        PÄÄVALIKKO,
+        PELI,
+        OHJERUUTU,
+        KEHITTÄJÄRUUTU;
+    }
+    public static Skene skene = Skene.PÄÄVALIKKO;
 
     public static void luoPeli() {
         // Jotain tarvittavia alkusäätöjä ennen kuin siirrytään pelisilmukkaan.
         Assets.createTextures();
         Äänet.toistaMusa("keimo_valikko");
+        nollaaPeli();
+    }
+
+    public static void nollaaPeli() {
+        pelaajat.clear();
         // Luodaan 1 pelaaja ja 3 bottia. Annetaan niille alkurakennelma, alkuraha ja 1 taistelija
         for (int i = 0; i < 4; i++) {
             boolean botti;
@@ -39,7 +54,7 @@ public class Peli {
     public static void peliLoop() {
         // Tähän pelisilmukka
         tarkistaPelinTila();
-        if (!peliOhi) {
+        if (!peliOhi && peliAloitettu && !pause) {
             for (Pelaaja p : pelaajat) {
                 for (Pelihahmo hahmo : p.hahmotKentällä) {
                     hahmo.liikuKohteeseen();
@@ -112,6 +127,9 @@ public class Peli {
         for (Pelaaja p : pelaajat) {
             if (p.rakennelma().annaHp() > 0) {
                 p.lisääRaha(p.rakennelma().annaTuotto());
+                for (int i = 0; i < p.rakennelma().kaivokset(); i++) {
+                    p.lisääRaha(1);
+                }
             }
         }
     }

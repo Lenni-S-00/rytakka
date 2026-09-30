@@ -15,10 +15,10 @@ public class Nappi extends HUDKomponentti {
         float kohdeX = haeRuutuKoordinaatti(kosketusX, leveys);
         float kohdeY = haeRuutuKoordinaatti(korkeus-kosketusY, korkeus);
         if (
-            kohdeX > matrixOffsetX - matrixScaleX/2f &&
-            kohdeX < matrixOffsetX + matrixScaleX/2f &&
-            kohdeY > matrixOffsetY - matrixScaleY/2f &&
-            kohdeY < matrixOffsetY + matrixScaleY/2f
+            kohdeX > matrixOffsetX - matrixScaleX &&
+            kohdeX < matrixOffsetX + matrixScaleX &&
+            kohdeY > matrixOffsetY - matrixScaleY &&
+            kohdeY < matrixOffsetY + matrixScaleY
         ) {
             return true;
         }
