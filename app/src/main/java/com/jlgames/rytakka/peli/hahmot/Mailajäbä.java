@@ -6,9 +6,11 @@ public class Mailajäbä extends Pelihahmo {
 
     public Mailajäbä(int tiimi) {
         super(tiimi);
-        super.hp = 2;
-        super.damage = 2;
-        super.nopeus = 0.02f;
+        super.hp = 15;
+        super.maxHP = 15;
+        super.damage = 3;
+        super.nopeus = 0.005f;
         super.tekstuuri = Assets.annaTekstuuri("Mailajäbä");
+        super.hinta = 10;
     }
 }

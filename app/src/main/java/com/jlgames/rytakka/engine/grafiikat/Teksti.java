@@ -91,7 +91,10 @@ public class Teksti implements Renderöitävä {
     public void päivitäTeksti(String teksti) {
         if (!this.teksti.equals(teksti)) {
             this.teksti = teksti;
-            glDeleteTextures(id, textureBuffer);
+            int[] textureIds = new int[1];
+
+            glDeleteTextures(1, textureIds, 0);
+            id = textureIds[0];
             Bitmap bitmap = Bitmap.createBitmap(tekstinLeveys, tekstinKorkeus, Bitmap.Config.ARGB_4444);
             Canvas canvas = new Canvas(bitmap);
             bitmap.eraseColor(0);
@@ -132,23 +135,18 @@ public class Teksti implements Renderöitävä {
             }
 
             pixels.flip();
-            this.textureBuffer = pixels.asIntBuffer();
-            glGenTextures(id, pixels.asIntBuffer());
-            glBindTexture(GL_TEXTURE_2D, id);
-            glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, leveys, korkeus, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
-            glGenerateMipmap(GL_TEXTURE_2D);
+            generateTexture(leveys, korkeus, pixels);
 
             bitmap.recycle();
         }
     }
 
     private void generateTexture(int width, int height, ByteBuffer buf) {
-        id = Assets.textureCount;
-        this.textureBuffer = buf.asIntBuffer();
-        glGenTextures(id, buf.asIntBuffer());
+        int[] textureIds = new int[1];
+
+        glGenTextures(1, textureIds, 0);
+
+        id = textureIds[0];
         glBindTexture(GL_TEXTURE_2D, id);
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);

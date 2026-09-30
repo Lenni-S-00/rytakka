@@ -6,10 +6,11 @@ public class Juuso extends Pelihahmo {
 
     public Juuso(int tiimi) {
         super(tiimi);
-        super.hp = 3;
-        super.damage = 999; // Juuso heittää päärynän
-        super.nopeus = 0.02f;
+        super.hp = 50;
+        super.maxHP = 50;
+        super.damage = 8; // Juuso heittää päärynän
+        super.nopeus = 0.005f;
         super.tekstuuri = Assets.annaTekstuuri("Juuso");
-        super.hinta = 20;
+        super.hinta = 30;
     }
 }

@@ -6,8 +6,8 @@ public class Torni extends Rakennelma{
 
     public Torni(int tiimi) {
         super(tiimi);
-        super.hp = 10;
-        super.maxHp = 10;
+        super.hp = 300;
+        super.maxHp = 300;
         super.rahanTuotto = 1;
         super.tekstuuri = Assets.annaTekstuuri("torni");
     }

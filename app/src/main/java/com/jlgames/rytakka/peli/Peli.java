@@ -61,7 +61,7 @@ public class Peli {
                     p.hahmotKentällä.removeIf(hahmo -> hahmo.annaHP() <= 0 && hahmo.annaKuolemaAjastin() <= 0);
                 }
             }
-            if (peliTick % 30 == 0) { // Tuotantosykli
+            if (peliTick % 60 == 0) { // Tuotantosykli
                 lisääRahat();
             }
             if (peliTick % 60 == 0) { // Vahingoitussykli

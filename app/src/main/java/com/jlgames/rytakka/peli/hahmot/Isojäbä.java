@@ -6,10 +6,11 @@ public class Isojäbä extends Pelihahmo {
 
     public Isojäbä(int tiimi) {
         super(tiimi);
-        super.hp = 3;
-        super.damage = 1;
-        super.nopeus = 0.02f;
+        super.hp = 30;
+        super.maxHP = 30;
+        super.damage = 3;
+        super.nopeus = 0.005f;
         super.tekstuuri = Assets.annaTekstuuri("Isojäbä");
-        super.hinta = 2;
+        super.hinta = 15;
     }
 }

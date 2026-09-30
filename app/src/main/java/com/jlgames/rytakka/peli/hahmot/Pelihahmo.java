@@ -1,5 +1,8 @@
 package com.jlgames.rytakka.peli.hahmot;
 
+import android.opengl.Matrix;
+
+import com.jlgames.rytakka.engine.assets.Assets;
 import com.jlgames.rytakka.engine.grafiikat.Renderöitävä;
 import com.jlgames.rytakka.engine.grafiikat.Shader;
 import com.jlgames.rytakka.engine.grafiikat.komponentit.KlikattavaObjekti;
@@ -103,6 +106,7 @@ public abstract class Pelihahmo extends KlikattavaObjekti {
         if (Math.abs(sijY-kohdeY) <= nopeus) sijY = kohdeY;
     }
 
+
     /**
      * Piirtofunktio muuten sama kuin Komponentti-luokassa, mutta hahmolle valitaan sen oma tekstuuri
      * sekä hahmon renderöinnin sijainti päivitetään joka framessa liikesijaintiin.
@@ -133,5 +137,23 @@ public abstract class Pelihahmo extends KlikattavaObjekti {
                 super.piirrä(shader);
             break;
         }
+        // Piirrä hp-palkki
+        Assets.annaTekstuuri("hud_palkki_punainen").bind(0);
+        float[] sijaintiMatriisiPalkkiPunainen = new float[16];
+        Matrix.setIdentityM(sijaintiMatriisiPalkkiPunainen, 0);
+        Matrix.translateM(sijaintiMatriisiPalkkiPunainen, 0, this.matrixOffsetX, this.matrixOffsetY -this.matrixScaleY, 0);
+        Matrix.scaleM(sijaintiMatriisiPalkkiPunainen, 0, this.matrixScaleX, this.matrixScaleY/16f, 1);
+        shader.setLocation(sijaintiMatriisiPalkkiPunainen);
+        Assets.annaNeliöModel().draw();
+
+        Assets.annaTekstuuri("hud_palkki_vihreä").bind(0);
+        float hpSkaala = 0;
+        if (hp > 0) hpSkaala = ((float) hp / maxHP);
+        float[] sijaintiMatriisiPalkkiVihreä = new float[16];
+        Matrix.setIdentityM(sijaintiMatriisiPalkkiVihreä, 0);
+        Matrix.translateM(sijaintiMatriisiPalkkiVihreä, 0, this.matrixOffsetX + this.matrixScaleX*hpSkaala - this.matrixScaleX, this.matrixOffsetY -this.matrixScaleY, 0);
+        Matrix.scaleM(sijaintiMatriisiPalkkiVihreä, 0, this.matrixScaleX*hpSkaala, this.matrixScaleY/16f, 1);
+        shader.setLocation(sijaintiMatriisiPalkkiVihreä);
+        Assets.annaNeliöModel().draw();
     }
 }

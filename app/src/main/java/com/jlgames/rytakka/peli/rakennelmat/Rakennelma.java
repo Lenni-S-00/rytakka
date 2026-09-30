@@ -97,12 +97,6 @@ public class Rakennelma extends KlikattavaObjekti {
 
         super.piirräVäri(shader, shaderVäri);
 
-        // Piirrä ääriviivat, jos valittu
-        if (Peli.valittuObjekti != null && Peli.valittuObjekti.equals(this)) {
-            Assets.annaTekstuuri("hud_valitun_ääriviivat").bind(0);
-            Assets.annaNeliöModel().draw();
-        }
-
         // Piirrä hp-palkki
         Assets.annaTekstuuri("hud_palkki_punainen").bind(0);
         float[] sijaintiMatriisiPalkkiPunainen = new float[16];
@@ -121,5 +115,11 @@ public class Rakennelma extends KlikattavaObjekti {
         Matrix.scaleM(sijaintiMatriisiPalkkiVihreä, 0, this.matrixScaleX*hpSkaala, this.matrixScaleY/8f, 1);
         shader.setLocation(sijaintiMatriisiPalkkiVihreä);
         Assets.annaNeliöModel().draw();
+
+        // Piirrä ääriviivat, jos valittu
+        if (Peli.valittuObjekti != null && Peli.valittuObjekti.equals(this)) {
+            Assets.annaTekstuuri("hud_valitun_ääriviivat").bind(0);
+            Assets.annaNeliöModel().draw();
+        }
     }
 }
