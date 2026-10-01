@@ -4,6 +4,7 @@ import com.jlgames.rytakka.engine.assets.Assets;
 import com.jlgames.rytakka.engine.grafiikat.Shader;
 import com.jlgames.rytakka.peli.Peli;
 
+// Luokka klikattavia komponentteja varten
 public abstract class KlikattavaObjekti extends Komponentti {
 
     public boolean tarkistaKlikkaus(float kosketusX, float kosketusY, float leveys, float korkeus) {

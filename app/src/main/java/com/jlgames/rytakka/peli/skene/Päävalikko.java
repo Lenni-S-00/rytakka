@@ -5,8 +5,8 @@ import com.jlgames.rytakka.engine.grafiikat.Shader;
 import com.jlgames.rytakka.engine.grafiikat.komponentit.Komponentti;
 import com.jlgames.rytakka.engine.grafiikat.komponentit.Nappi;
 import com.jlgames.rytakka.peli.Peli;
-import com.jlgames.rytakka.peli.Render;
 
+// Pelin aloitusnäkymänä toimii päävalikko.
 public class Päävalikko {
 
     private static Shader shader = new Shader();

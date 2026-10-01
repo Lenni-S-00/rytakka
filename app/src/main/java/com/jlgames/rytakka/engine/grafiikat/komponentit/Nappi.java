@@ -3,10 +3,12 @@ package com.jlgames.rytakka.engine.grafiikat.komponentit;
 import com.jlgames.rytakka.engine.grafiikat.Renderöitävä;
 
 public class Nappi extends HUDKomponentti {
+    // Yksinkertaisempi konstruktori, ei käytetä tällä hetkellä.
     public Nappi(Renderöitävä tekstuuri) {
         super(tekstuuri);
     }
 
+    // Varsinainen konstruktori
     public Nappi(float skaalaX, float skaalaY, float offsetX, float offsetY, Renderöitävä tekstuuri) {
         super(skaalaX, skaalaY, offsetX, offsetY, tekstuuri);
     }

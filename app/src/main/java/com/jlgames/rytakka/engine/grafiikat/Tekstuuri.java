@@ -88,11 +88,13 @@ public class Tekstuuri implements Renderöitävä {
     }
 
     private void generateTexture(int width, int height, ByteBuffer buf) {
+        // Seuraava alustus muokattu toimivaksi useimpien laitteiden kanssa
         int[] textureIds = new int[1];
 
         glGenTextures(1, textureIds, 0);
 
         id = textureIds[0];
+        // Sitten loppu tekstuuringenerointi
         glBindTexture(GL_TEXTURE_2D, id);
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);

@@ -8,6 +8,7 @@ import com.jlgames.rytakka.engine.grafiikat.Shader;
 import com.jlgames.rytakka.engine.grafiikat.komponentit.KlikattavaObjekti;
 import com.jlgames.rytakka.peli.Peli;
 
+// Tällä hetkellä pelissä on vain yhdenlaisia rakennelmia kentällä. Lisätään muita myöhemmin.
 public class Rakennelma extends KlikattavaObjekti {
 
     int hp;

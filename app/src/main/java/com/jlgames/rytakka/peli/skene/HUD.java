@@ -1,5 +1,7 @@
 package com.jlgames.rytakka.peli.skene;
 
+import android.util.Log;
+
 import com.jlgames.rytakka.engine.assets.Assets;
 import com.jlgames.rytakka.engine.grafiikat.Shader;
 import com.jlgames.rytakka.engine.grafiikat.Teksti;
@@ -21,6 +23,7 @@ import com.jlgames.rytakka.peli.hahmot.Tikkujäbä;
 import com.jlgames.rytakka.peli.rakennelmat.Rakennelma;
 import com.jlgames.rytakka.peli.toiminnot.Toiminnot;
 
+// Luokka HUDielementeille
 public class HUD {
 
     private static Shader shader = new Shader();
@@ -39,21 +42,21 @@ public class HUD {
     private static Nappi takaisinNappi = new Nappi(1/14f, 1/10f, -11/14f, -7/8f,  Assets.annaTekstuuri("hud_nappi_takaisin"));
     private static Nappi ostaTaistelijaPainike = new Nappi(1/14f, 1/10f, -8/14f, -7/8f,  Assets.annaTekstuuri("taistelija"));
     private static Nappi ostaTikkujäbäPainike = new Nappi(1/14f, 1/10f, -6/14f, -7/8f,  Assets.annaTekstuuri("Tikkujäbä"));
-    private static Nappi ostaLuujäbäPainike = new Nappi(1/14f, 1/10f, -4/14f, -7/8f,  Assets.annaTekstuuri("Luujäbä"));
     private static Nappi ostaMailajäbäPainike = new Nappi(1/14f, 1/10f, -2/14f, -7/8f,  Assets.annaTekstuuri("Mailajäbä"));
-    private static Nappi ostaIsojäbäPainike = new Nappi(1/14f, 1/10f, 0, -7/8f,  Assets.annaTekstuuri("Isojäbä"));
-    private static Nappi ostaRynnäkköjäbäPainike = new Nappi(1/14f, 1/10f, 2/14f, -7/8f,  Assets.annaTekstuuri("Rynnäkköjäbä"));
-    private static Nappi ostaLepakkojäbäPainike = new Nappi(1/14f, 1/10f, 4/14f, -7/8f,  Assets.annaTekstuuri("Lepakkojäbä"));
+    private static Nappi ostaLuujäbäPainike = new Nappi(1/14f, 1/10f, -4/14f, -7/8f,  Assets.annaTekstuuri("Luujäbä"));
     private static Nappi ostaPiikkipallojäbäPainike = new Nappi(1/14f, 1/10f, 6/14f, -7/8f,  Assets.annaTekstuuri("Piikkipallojäbä"));
-    private static Nappi ostaMuskelijäbäPainike = new Nappi(1/14f, 1/10f, 8/14f, -7/8f,  Assets.annaTekstuuri("Muskelijäbä"));
+    private static Nappi ostaRynnäkköjäbäPainike = new Nappi(1/14f, 1/10f, 2/14f, -7/8f,  Assets.annaTekstuuri("Rynnäkköjäbä"));
+    private static Nappi ostaIsojäbäPainike = new Nappi(1/14f, 1/10f, 0, -7/8f,  Assets.annaTekstuuri("Isojäbä"));
     private static Nappi ostaPäällikköjäbäPainike = new Nappi(1/14f, 1/10f, 10/14f, -7/8f,  Assets.annaTekstuuri("Päällikköjäbä"));
+    private static Nappi ostaMuskelijäbäPainike = new Nappi(1/14f, 1/10f, 8/14f, -7/8f,  Assets.annaTekstuuri("Muskelijäbä"));
+    private static Nappi ostaLepakkojäbäPainike = new Nappi(1/14f, 1/10f, 4/14f, -7/8f,  Assets.annaTekstuuri("Lepakkojäbä"));
     private static Nappi ostaJuusoPainike = new Nappi(1/14f, 1/10f, 12/14f, -7/8f,  Assets.annaTekstuuri("Juuso_lippis"));
     private static HUDKomponentti ostoPainikePohja = new HUDKomponentti(1/14f, 1/10f, -1/2f, -7/8f,  Assets.annaTekstuuri("hud_ostopainike_tyhjä"));
     private static Nappi päivitäRakennelmaNappi = new Nappi(1/10f, 1/10f, -2/8f, -7/8f,  Assets.annaTekstuuri("hud_nappi_päivitä_rakennelma"));
     private static Nappi ostaKaivosNappi = new Nappi(1/10f, 1/10f, -2/8f, -7/8f,  Assets.annaTekstuuri("hud_nappi_osta_kaivos"));
     private static Nappi hyökkääNappi = new Nappi(1/10f, 1/10f, -1/2f, -7/8f,  Assets.annaTekstuuri("hud_nappi_hyökkää"));
 
-    public static enum Valikot {
+    public enum Valikot {
         RAKENNELMA_OMA_PÄÄVALIKKO,
         RAKENNELMA_OMA_HAHMOT,
         RAKENNELMA_OMA_PÄIVITYS,
@@ -61,6 +64,7 @@ public class HUD {
     }
     public static Valikot hudValikko = Valikot.RAKENNELMA_OMA_PÄÄVALIKKO;
 
+    // Tätä hirviötä voisi vähän pilkkoa.
     public static void tarkistaKosketus(float x, float y, float leveys, float korkeus) {
         // Tähän kaikki HUD-valikoiden ja nappien toiminnot.
         if (Peli.peliOhi) {
@@ -100,32 +104,14 @@ public class HUD {
                             Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
                             Peli.pelaajat.get(0).lisääHahmo(h);
                         }
-                    } else if (ostaLuujäbäPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
-                        Pelihahmo h = new Luujäbä(0);
-                        if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
-                            Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
-                            Peli.pelaajat.get(0).lisääHahmo(h);
-                        }
                     } else if (ostaMailajäbäPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
                         Pelihahmo h = new Mailajäbä(0);
                         if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
                             Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
                             Peli.pelaajat.get(0).lisääHahmo(h);
                         }
-                    } else if (ostaIsojäbäPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
-                        Pelihahmo h = new Isojäbä(0);
-                        if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
-                            Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
-                            Peli.pelaajat.get(0).lisääHahmo(h);
-                        }
-                    } else if (ostaRynnäkköjäbäPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
-                        Pelihahmo h = new Rynnäkköjäbä(0);
-                        if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
-                            Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
-                            Peli.pelaajat.get(0).lisääHahmo(h);
-                        }
-                    } else if (ostaLepakkojäbäPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
-                        Pelihahmo h = new Lepakkojäbä(0);
+                    } else if (ostaLuujäbäPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
+                        Pelihahmo h = new Luujäbä(0);
                         if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
                             Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
                             Peli.pelaajat.get(0).lisääHahmo(h);
@@ -136,8 +122,14 @@ public class HUD {
                             Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
                             Peli.pelaajat.get(0).lisääHahmo(h);
                         }
-                    } else if (ostaMuskelijäbäPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
-                        Pelihahmo h = new Muskelijäbä(0);
+                    } else if (ostaRynnäkköjäbäPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
+                        Pelihahmo h = new Rynnäkköjäbä(0);
+                        if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
+                            Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
+                            Peli.pelaajat.get(0).lisääHahmo(h);
+                        }
+                    } else if (ostaIsojäbäPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
+                        Pelihahmo h = new Isojäbä(0);
                         if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
                             Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
                             Peli.pelaajat.get(0).lisääHahmo(h);
@@ -148,6 +140,22 @@ public class HUD {
                             Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
                             Peli.pelaajat.get(0).lisääHahmo(h);
                         }
+                    } else if (ostaMuskelijäbäPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
+                        Pelihahmo h = new Muskelijäbä(0);
+                        if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
+                            Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
+                            Peli.pelaajat.get(0).lisääHahmo(h);
+                        }
+                    } else if (ostaLepakkojäbäPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
+                        if (!Peli.skinitAvattu) {
+                            Log.d("Kauppa", "Lepakkojäbä vaatii premium-skinin.");
+                            return;
+                        }
+                        Pelihahmo h = new Lepakkojäbä(0);
+                            if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
+                                Peli.pelaajat.get(0).lisääRaha(-h.annaHinta());
+                                Peli.pelaajat.get(0).lisääHahmo(h);
+                            }
                     } else if (ostaJuusoPainike.tarkistaKlikkaus(x, y, leveys, korkeus)) {
                         Pelihahmo h = new Juuso(0);
                         if (Peli.pelaajat.get(0).raha() >= h.annaHinta()) { // Hardkoodattu. Mietitään tiimien toimintaa paremmin.
@@ -211,38 +219,38 @@ public class HUD {
                             ostoPainikePohja.päivitäSijainti(ostaTikkujäbäPainike.offsetX(), ostaTikkujäbäPainike.offsetY());
                             ostoPainikePohja.piirrä(shader);
                             ostaTikkujäbäPainike.piirrä(shader);
-                            // Renderöi Luujäbän ostopainike ja pohjatekstuuri
-                            ostoPainikePohja.päivitäSijainti(ostaLuujäbäPainike.offsetX(), ostaLuujäbäPainike.offsetY());
-                            ostoPainikePohja.piirrä(shader);
-                            ostaLuujäbäPainike.piirrä(shader);
                             // Renderöi Mailajäbän ostopainike ja pohjatekstuuri
                             ostoPainikePohja.päivitäSijainti(ostaMailajäbäPainike.offsetX(), ostaMailajäbäPainike.offsetY());
                             ostoPainikePohja.piirrä(shader);
                             ostaMailajäbäPainike.piirrä(shader);
-                            // Renderöi Isojäbän ostopainike ja pohjatekstuuri
-                            ostoPainikePohja.päivitäSijainti(ostaIsojäbäPainike.offsetX(), ostaIsojäbäPainike.offsetY());
+                            // Renderöi Luujäbän ostopainike ja pohjatekstuuri
+                            ostoPainikePohja.päivitäSijainti(ostaLuujäbäPainike.offsetX(), ostaLuujäbäPainike.offsetY());
                             ostoPainikePohja.piirrä(shader);
-                            ostaIsojäbäPainike.piirrä(shader);
-                            // Renderöi Rynnäkköjäbän ostopainike ja pohjatekstuuri
-                            ostoPainikePohja.päivitäSijainti(ostaRynnäkköjäbäPainike.offsetX(), ostaRynnäkköjäbäPainike.offsetY());
-                            ostoPainikePohja.piirrä(shader);
-                            ostaRynnäkköjäbäPainike.piirrä(shader);
-                            // Renderöi Lepakkojäbän ostopainike ja pohjatekstuuri
-                            ostoPainikePohja.päivitäSijainti(ostaLepakkojäbäPainike.offsetX(), ostaLepakkojäbäPainike.offsetY());
-                            ostoPainikePohja.piirrä(shader);
-                            ostaLepakkojäbäPainike.piirrä(shader);
+                            ostaLuujäbäPainike.piirrä(shader);
                             // Renderöi Piikkipallojäbän ostopainike ja pohjatekstuuri
                             ostoPainikePohja.päivitäSijainti(ostaPiikkipallojäbäPainike.offsetX(), ostaPiikkipallojäbäPainike.offsetY());
                             ostoPainikePohja.piirrä(shader);
                             ostaPiikkipallojäbäPainike.piirrä(shader);
-                            // Renderöi Muskelijäbän ostopainike ja pohjatekstuuri
-                            ostoPainikePohja.päivitäSijainti(ostaMuskelijäbäPainike.offsetX(), ostaMuskelijäbäPainike.offsetY());
+                            // Renderöi Rynnäkköjäbän ostopainike ja pohjatekstuuri
+                            ostoPainikePohja.päivitäSijainti(ostaRynnäkköjäbäPainike.offsetX(), ostaRynnäkköjäbäPainike.offsetY());
                             ostoPainikePohja.piirrä(shader);
-                            ostaMuskelijäbäPainike.piirrä(shader);
+                            ostaRynnäkköjäbäPainike.piirrä(shader);
+                            // Renderöi Isojäbän ostopainike ja pohjatekstuuri
+                            ostoPainikePohja.päivitäSijainti(ostaIsojäbäPainike.offsetX(), ostaIsojäbäPainike.offsetY());
+                            ostoPainikePohja.piirrä(shader);
+                            ostaIsojäbäPainike.piirrä(shader);
                             // Renderöi Päällikköjäbän ostopainike ja pohjatekstuuri
                             ostoPainikePohja.päivitäSijainti(ostaPäällikköjäbäPainike.offsetX(), ostaPäällikköjäbäPainike.offsetY());
                             ostoPainikePohja.piirrä(shader);
                             ostaPäällikköjäbäPainike.piirrä(shader);
+                            // Renderöi Muskelijäbän ostopainike ja pohjatekstuuri
+                            ostoPainikePohja.päivitäSijainti(ostaMuskelijäbäPainike.offsetX(), ostaMuskelijäbäPainike.offsetY());
+                            ostoPainikePohja.piirrä(shader);
+                            ostaMuskelijäbäPainike.piirrä(shader);
+                            // Renderöi Lepakkojäbän ostopainike ja pohjatekstuuri
+                            ostoPainikePohja.päivitäSijainti(ostaLepakkojäbäPainike.offsetX(), ostaLepakkojäbäPainike.offsetY());
+                            ostoPainikePohja.piirrä(shader);
+                            ostaLepakkojäbäPainike.piirrä(shader);
                             // Renderöi Juuson ostopainike ja pohjatekstuuri
                             ostoPainikePohja.päivitäSijainti(ostaJuusoPainike.offsetX(), ostaJuusoPainike.offsetY());
                             ostoPainikePohja.piirrä(shader);

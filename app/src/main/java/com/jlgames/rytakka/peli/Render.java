@@ -9,7 +9,7 @@ import com.jlgames.rytakka.peli.skene.Päävalikko;
 public class Render {
 
     public static void renderLoop() {
-        // Tähän grafiikan renderöintisilmukka
+        // Tässä grafiikan renderöintisilmukka
         switch (Peli.skene) {
             case PÄÄVALIKKO:
                 Päävalikko.renderöi();

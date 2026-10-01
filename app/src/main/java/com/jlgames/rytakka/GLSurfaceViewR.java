@@ -5,7 +5,6 @@ import android.opengl.GLSurfaceView;
 import android.view.MotionEvent;
 
 import com.jlgames.rytakka.peli.Syöte;
-import com.jlgames.rytakka.peli.toiminnot.Toiminnot;
 
 public class GLSurfaceViewR extends GLSurfaceView {
 

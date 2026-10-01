@@ -1,17 +1,76 @@
 # Rytäkkä
 
-## Peli, jossa rytisee
+### Peli, jossa rytisee
 
-## Uusin versio (1.10.2026): 0.4
+## Kuvaus
+
+Tässä pelissä taistelet kolmea bottia vastaan. Ne luovat joukkoja, jotka sinun on omilla joukoillasi päihitettävä. Voit joukkojen lisäksi rakentaa kultakaivoksia, jotka tuottavat sinulle enemmän rahaa. Päihitettyäsi kaikki botit voitat pelin!
+
+## Pelaaminen
+
+Tarvitset peliä varten Android-puhelimen. Pelissä on päävalikko, josta voit aloittaa pelin. Voit myös keskeyttää pelin ja palata päävalikkoon. Peli käynnistetään esim. Android Studion kautta.
+Puhelin tulee yhdistää tietokoneeseen, jossa on Android Studio tai vastaava alusta asennettuna. Tällöin alusta voi löytää puhelimen ja sillä voi pelata peliä. Puhelimen asetuksista tulee sallia kehittäjäasetukset.
+Peliä voi pelata myös Android-emulaattorilla. Paras kokemus tulee kuitenkin puhelimella.
+
+## Lisenssi
+
+Projektin lähdekoodi on lisensoitu MIT-lisenssillä.
+ks. `LICENSE`-tiedosto
+Kolmansien osapuolten ominaisuudet eivät kuulu lisenssin alle ja niihin sovelletaan niiden omia lisenssejä sekä käyttöehtoja.
+
+## Sovelluksensisäiset ostokset
+
+Sovelluksessa käytetään RevenueCatia sovelluksensisäisiä ostoja varten.
+Lepakkomies-skinin saa RevenueCatin entitlementin kautta.
+
+## Teknologiat
+
+ - Java
+ - Android
+ - OpenGL ES
+ - RevenueCat
+
+## Testaus
+
+Peli on pelitestattu ja ominaisuuksien testaamiseen on käytetty Android Studion Logcat-logeja logaten olennaisia arvoja sekä mahdollisia virheviestejä. Testaamiseen on käytetty monta eri Android-laitetta.
+
+## Asennus
+
+Asennusta varten ei nykyisellään ole alustaa eikä työkaluja. Pelin voi ajaa esim. Android Studiosta.
+
+## Tuki
+
+Kehittäjiin voi ottaa yhteyttä.
+
+## Kehittäjät
+
+Joonatan Taurio & Lenni Sigfridsson
+
+## Tulevat toiminnot
+
+ks. versiolistaus alla
+
+## Dokumentaatio
+
+Tulossa.
+
+## Versiolistaus
+
+## Uusin versio (1.10.2026): 0.5
 
 #### **Todo (projektiversio): **
- - Vihollisille tekoäly, joka yrittää hyökätä pelaajaa vastaan.
+ - Viimeistely
  
 #### **Todo (tulevaisuuden versioihin): **
  - Tiimien hallinta: Pelaaja voi valita tiimin värin/joukkueen. Hahmot voidaan värikoodata esim. shaderin avulla.
  - Ostovalikkoon hahmojen nimet, hinnat ja indikaattori siihen, onko varaa (muuta harmaaksi jos ei).
  - Slotteja kentälle, joihin pelaaja ja viholliset voivat rakentaa rakennelmiaan.
- 
+
+### Versio 0.5
+ - Lisätty boteille tekoäly.
+ - Kommentoitu ja dokumentoitu koodi.
+ - Lepakkojäbä täytyy nyt ostaa.
+
 ### Versio 0.4
  - Lisätty RevenueCat ja pelinsisäiset ostot.
  

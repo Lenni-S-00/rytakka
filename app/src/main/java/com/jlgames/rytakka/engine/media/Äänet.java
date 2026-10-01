@@ -24,6 +24,7 @@ public class Äänet {
     /**
      * Toista edellinen syöttämällä tyhjä merkkijono.
      */
+    // Ääniefektejä varten
     public static void toistaSFX(String äänenNimi) {
         if (!äänenNimi.isEmpty()) ääniToistin = Assets.annaÄäni(äänenNimi);
         if (ääniToistin != null) {
@@ -32,8 +33,10 @@ public class Äänet {
         }
     }
 
+    // Lisä-ääniä varten. Lainattu toisesta pelistä.
+    /*
     public static void toistaRandomTölkkiÄäni() {
         int äänenNumero = random.nextInt(8);
         toistaSFX("tölkki" + äänenNumero);
-    }
+    }*/
 }

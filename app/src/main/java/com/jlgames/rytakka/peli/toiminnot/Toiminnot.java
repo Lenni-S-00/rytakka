@@ -4,10 +4,11 @@ import com.jlgames.rytakka.peli.Pelaaja;
 import com.jlgames.rytakka.peli.Peli;
 import com.jlgames.rytakka.peli.hahmot.Pelihahmo;
 import com.jlgames.rytakka.peli.rakennelmat.Rakennelma;
-import com.jlgames.rytakka.peli.skene.HUD;
 
+// Luokka yleisimpiä toimintoja varten
 public class Toiminnot {
 
+    // Pelaajan hyökkäys
     public static void hyökkää(float klikkausX, float klikkausY, float ruudunLeveys, float ruudunKorkeus) {
         if (Peli.valittuObjekti instanceof Rakennelma) {
             Rakennelma rakennelma = (Rakennelma) Peli.valittuObjekti;
@@ -19,6 +20,20 @@ public class Toiminnot {
         }
     }
 
+    // Boteille oma hyökkäyslogiikka
+    public static void bottiHyökkäys(Pelaaja botti, Rakennelma kohde) {
+
+        if (kohde == null) {
+            return;
+        }
+        kohde.hyökkää(botti.tiimi);
+        float kohdeX = kohde.offsetX();
+        float kohdeY = kohde.offsetY();
+
+        siirräBotinHahmoja(botti, kohdeX, kohdeY);
+    }
+
+    // Logiikka hahmojen kimppuun hyökkäämiselle ja hyökkäyksen kohteen valinnalle
     public static void hyökkääVihollisHahmoihin(int hyökkääjä, int kohde) {
         Pelaaja h = Peli.pelaajat.get(hyökkääjä);
         Pelaaja p = Peli.pelaajat.get(kohde);
@@ -35,6 +50,7 @@ public class Toiminnot {
         }
     }
 
+    // Pelaajan hahmojen siirto
     public static void siirräHahmoja(float x, float y) {
         for (Pelaaja p : Peli.pelaajat) {
             if (!p.botti) {
@@ -45,6 +61,14 @@ public class Toiminnot {
         }
     }
 
+    // Bottien hahmojen siirto
+    private static void siirräBotinHahmoja(Pelaaja botti, float x, float y) {
+        for (Pelihahmo hahmo : botti.hahmotKentällä) {
+            hahmo.asetaKohde(x, y);
+        }
+    }
+
+    // Saatetaan tarvita myöhemmin.
     private static float haeRuutuKoordinaatti(float kosketusKoordinaatti, float ruudunKoko) {
         return -1f + (kosketusKoordinaatti/ruudunKoko)*2f;
     }

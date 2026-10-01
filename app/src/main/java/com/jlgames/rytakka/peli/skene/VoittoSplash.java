@@ -6,6 +6,7 @@ import com.jlgames.rytakka.engine.grafiikat.komponentit.HUDKomponentti;
 import com.jlgames.rytakka.engine.grafiikat.komponentit.Nappi;
 import com.jlgames.rytakka.peli.Peli;
 
+// Kun peli on voitettu, tulee VoittoSplash-näkymä näkyviin.
 public class VoittoSplash {
 
     private static HUDKomponentti voittoRuutu = new HUDKomponentti(0.75f, 0.75f, 0, 0, Assets.annaTekstuuri("hud_splash_voitto"));

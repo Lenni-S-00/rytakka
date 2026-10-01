@@ -8,6 +8,7 @@ import com.jlgames.rytakka.peli.Peli;
 import com.jlgames.rytakka.peli.Syöte;
 import com.jlgames.rytakka.peli.hahmot.Pelihahmo;
 
+// Ruuduista kiinnostavin, tässä luokassa tarkistetaan käyttäjän kosketukset ja piirretään pelinsisäiset tapahtumat.
 public class PeliRuutu {
 
     private static Shader shader = new Shader();
@@ -58,6 +59,7 @@ public class PeliRuutu {
         }
     }
 
+    // Renderöidään pelinsisäiset elementit, eli tausta, rakennelmat ja hahmot.
     public static void renderöi() {
         try {
             shader.bind();

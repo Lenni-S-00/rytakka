@@ -5,12 +5,12 @@ import android.content.pm.ActivityInfo;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.os.Looper;
-import android.view.MotionEvent;
 
 import com.jlgames.rytakka.engine.assets.Assets;
 import com.jlgames.rytakka.engine.RevenueCatManager;
 import com.jlgames.rytakka.peli.Peli;
 
+// Main Activity
 public class OpenGLES20Activity extends Activity {
 
     private GLSurfaceView gLView;

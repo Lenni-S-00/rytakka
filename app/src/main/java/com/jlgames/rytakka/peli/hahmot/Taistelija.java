@@ -2,6 +2,7 @@ package com.jlgames.rytakka.peli.hahmot;
 
 import com.jlgames.rytakka.engine.assets.Assets;
 
+// Taistelija-hahmo testausta varten.
 public class Taistelija extends Pelihahmo {
 
     public Taistelija(int tiimi) {

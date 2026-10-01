@@ -11,6 +11,7 @@ public class HUDKomponentti extends Komponentti {
         this.tekstuuri = tekstuuri;
     }
 
+    // Tätä varsinaista konstruktoria käytetään useasti.
     public HUDKomponentti(float skaalaX, float skaalaY, float offsetX, float offsetY, Renderöitävä tekstuuri) {
         super.matrixScaleX = skaalaX;
         super.matrixScaleY = skaalaY;

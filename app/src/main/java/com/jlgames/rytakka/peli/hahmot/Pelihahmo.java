@@ -9,6 +9,7 @@ import com.jlgames.rytakka.engine.grafiikat.komponentit.KlikattavaObjekti;
 
 import java.util.Random;
 
+// Kaikki hahmot perivät Pelihahmon.
 public abstract class Pelihahmo extends KlikattavaObjekti {
 
     int hp;
@@ -37,16 +38,16 @@ public abstract class Pelihahmo extends KlikattavaObjekti {
                 this.alkuSijY = -0.6f + randomSpawnSijaintiHajontaY;
             break;
             case 1:
-                this.alkuSijX = 0.7f;
-                this.alkuSijY = -0.6f;
+                this.alkuSijX = 0.7f + randomSpawnSijaintiHajontaX;
+                this.alkuSijY = -0.6f + randomSpawnSijaintiHajontaY;
             break;
             case 2:
-                this.alkuSijX = -0.7f;
-                this.alkuSijY = 0.6f;
+                this.alkuSijX = -0.7f + randomSpawnSijaintiHajontaX;
+                this.alkuSijY = 0.6f + randomSpawnSijaintiHajontaY;
             break;
             case 3:
-                this.alkuSijX = 0.7f;
-                this.alkuSijY = 0.6f;
+                this.alkuSijX = 0.7f + randomSpawnSijaintiHajontaX;
+                this.alkuSijY = 0.6f + randomSpawnSijaintiHajontaY;
             break;
         }
         this.sijX = alkuSijX;
@@ -97,6 +98,10 @@ public abstract class Pelihahmo extends KlikattavaObjekti {
         float etäisyysX = Math.abs(kohdeX-sijX);
         float etäisyysY = Math.abs(kohdeY-sijY);
         float hypotenuusa = (float)Math.sqrt(Math.pow(etäisyysX, 2) + Math.pow(etäisyysY, 2));
+        // Hahmo on jo kohteessa.
+        if (hypotenuusa == 0) {
+            return;
+        }
         if (sijX < kohdeX) sijX += (etäisyysX/hypotenuusa) * nopeus;
         else if (sijX > kohdeX) sijX -= (etäisyysX/hypotenuusa) * nopeus;;
         if (sijY < kohdeY) sijY += (etäisyysY/hypotenuusa) * nopeus;

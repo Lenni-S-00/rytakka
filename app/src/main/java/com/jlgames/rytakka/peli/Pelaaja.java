@@ -1,9 +1,8 @@
 package com.jlgames.rytakka.peli;
 
 import com.jlgames.rytakka.peli.hahmot.Pelihahmo;
-import com.jlgames.rytakka.peli.hahmot.Taistelija;
+import com.jlgames.rytakka.peli.rakennelmat.Linnake;
 import com.jlgames.rytakka.peli.rakennelmat.Rakennelma;
-import com.jlgames.rytakka.peli.rakennelmat.Torni;
 
 import java.util.ArrayList;
 
@@ -12,13 +11,13 @@ public class Pelaaja {
     private Rakennelma rakennelma; // pelaajan alkurakennelma, jota voi päivittää.
     public ArrayList<Pelihahmo> hahmotKentällä = new ArrayList<>(); // Vaihdetaan ehkä HashMappiin tai keksitään joku järkevä keino referoida yksittäisiin hahmoihin.
     private int raha;
-    public boolean botti;
-    private int tiimi;
+    public boolean botti; // Onko pelaaja botti
+    public int tiimi;
     public Pelaaja(int tiimi, boolean botti) {
         this.tiimi = tiimi;
         this.botti = botti;
         this.raha = 0;
-        this.rakennelma = new Torni(tiimi);
+        this.rakennelma = new Linnake(tiimi);
         this.hahmotKentällä.clear();
     }
 
@@ -42,6 +41,7 @@ public class Pelaaja {
         this.raha += määrä;
     }
 
+    // Voitaneen käyttää tulevaisuudessa.
     public void päivitäRakennelma(Rakennelma rakennelma) {
         this.rakennelma = rakennelma;
     }

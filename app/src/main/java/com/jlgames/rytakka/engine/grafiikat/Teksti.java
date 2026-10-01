@@ -91,10 +91,11 @@ public class Teksti implements Renderöitävä {
     public void päivitäTeksti(String teksti) {
         if (!this.teksti.equals(teksti)) {
             this.teksti = teksti;
+            // Seuraava alustus muokattu toimivaksi useimpien laitteiden kanssa
             int[] textureIds = new int[1];
-
             glDeleteTextures(1, textureIds, 0);
             id = textureIds[0];
+            // Kun alustus on tehty, voidaan rauhassa päivittää tesktit.
             Bitmap bitmap = Bitmap.createBitmap(tekstinLeveys, tekstinKorkeus, Bitmap.Config.ARGB_4444);
             Canvas canvas = new Canvas(bitmap);
             bitmap.eraseColor(0);
@@ -142,11 +143,13 @@ public class Teksti implements Renderöitävä {
     }
 
     private void generateTexture(int width, int height, ByteBuffer buf) {
+        // Seuraava alustus muokattu toimivaksi useimpien laitteiden kanssa
         int[] textureIds = new int[1];
 
         glGenTextures(1, textureIds, 0);
 
         id = textureIds[0];
+        // Sitten loppu tekstin tekstuuringenerointi
         glBindTexture(GL_TEXTURE_2D, id);
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);

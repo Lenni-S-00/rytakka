@@ -17,7 +17,10 @@ import com.revenuecat.purchases.interfaces.ReceiveOfferingsCallback;
 import com.revenuecat.purchases.interfaces.PurchaseCallback;
 import com.revenuecat.purchases.models.StoreTransaction;
 
-
+/** Luokka RevenueCatin APIn toimivuutta varten
+ * Testattu yhdellä premium-skinillä.
+ * Myös lokit mukana myöhempää tarkastelua varten mukaan lukien virhelokien override.
+*/
 public class RevenueCatManager {
 
     private static final String tag = "RevenueCat";
@@ -33,6 +36,7 @@ public class RevenueCatManager {
         this.activity = activity;
     }
 
+    // Käytetään kovakoodattua testi-API-avainta.
     public void konfiguroi() {
         Purchases.configure(
             new PurchasesConfiguration.Builder(context, "test_EwXxPpjpvvmomNgSdIVZsTuGoMW").build()
@@ -68,6 +72,7 @@ public class RevenueCatManager {
         );
     }
 
+    // Tällä hetkellä vain lepakkomies-skini
     public void ostaSkinit() {
 
         if (skinit == null) {
@@ -80,9 +85,7 @@ public class RevenueCatManager {
             new PurchaseCallback() {
 
                 @Override
-                public void onCompleted(
-                        StoreTransaction storeTransaction,
-                        CustomerInfo customerInfo) {
+                public void onCompleted(StoreTransaction storeTransaction, CustomerInfo customerInfo) {
 
                     if (omistaaSkinit(customerInfo)) {
 

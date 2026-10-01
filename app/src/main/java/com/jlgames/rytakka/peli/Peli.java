@@ -5,10 +5,8 @@ import com.jlgames.rytakka.engine.assets.Assets;
 import com.jlgames.rytakka.engine.grafiikat.komponentit.KlikattavaObjekti;
 import com.jlgames.rytakka.engine.media.Äänet;
 import com.jlgames.rytakka.peli.hahmot.Pelihahmo;
-import com.jlgames.rytakka.peli.hahmot.Taistelija;
-import com.jlgames.rytakka.peli.rakennelmat.Linnake;
+import com.jlgames.rytakka.peli.hahmot.Tikkujäbä;
 import com.jlgames.rytakka.peli.rakennelmat.Rakennelma;
-import com.jlgames.rytakka.peli.rakennelmat.Torni;
 import com.jlgames.rytakka.peli.toiminnot.Toiminnot;
 
 import java.util.ArrayList;
@@ -24,6 +22,7 @@ public class Peli {
     public static int peliTick = 0;
     public static boolean skinitAvattu = false;
     public static boolean kauppaKlikattu = false;
+    private static ArrayList<VihollisAI> vihollisAIt; // Bottien tekoälyä varten
 
     public static enum Skene {
         PÄÄVALIKKO,
@@ -33,6 +32,7 @@ public class Peli {
     }
     public static Skene skene = Skene.PÄÄVALIKKO;
 
+    // Annetaan pelille revenueCatManager pelinsisäisiä ostoja varten.
     public Peli(RevenueCatManager revenueCatManager) {
     }
 
@@ -45,25 +45,34 @@ public class Peli {
 
     public static void nollaaPeli() {
         pelaajat.clear();
-        // Luodaan 1 pelaaja ja 3 bottia. Annetaan niille alkurakennelma, alkuraha ja 1 taistelija
+        // Luodaan 1 pelaaja ja 3 bottia. Annetaan niille alkurakennelma, alkuraha ja 1 tikkujäbä
         for (int i = 0; i < 4; i++) {
             boolean botti;
             if (i == 0) botti = false;
             else botti = true;
             Pelaaja p = new Pelaaja(i, botti);
-            p.lisääHahmo(new Taistelija(i));
+            p.lisääHahmo(new Tikkujäbä(i));
             p.lisääRaha(50);
             pelaajat.add(p);
+        }
+        // Lisätään boteille yksinkertainen tekoäly.
+        vihollisAIt = new ArrayList<>();
+        for (Pelaaja p : pelaajat) {
+            if (p.botti) {
+                vihollisAIt.add(new VihollisAI(p, pelaajat));
+            }
         }
     }
 
     public static void peliLoop() {
-        // Tähän pelisilmukka
+        // Pelisilmukka
         tarkistaPelinTila();
         if (!peliOhi && peliAloitettu && !pause) {
             for (Pelaaja p : pelaajat) {
-                for (Pelihahmo hahmo : p.hahmotKentällä) {
-                    hahmo.liikuKohteeseen();
+                for (Pelihahmo hahmo : new ArrayList<>(p.hahmotKentällä)) {
+                    if (hahmo.annaHP() > 0) {
+                        hahmo.liikuKohteeseen();
+                    }
                 }
             }
             if (peliTick % 5 == 0) { // Vihollisen hakusykli
@@ -118,8 +127,14 @@ public class Peli {
                     }
                 }
             }
+            // Vihollisen toiminto joka 400. ticki (paitsi ensimmäinen tick)
+            if (peliTick % 400 == 0 && peliTick != 0){
+                for (VihollisAI ai : vihollisAIt) {
+                    ai.päivitä();
+                }}
             peliTick++;
         }
+
     }
 
     private static void hahmojenKaksintaistelu(Pelihahmo hahmo1, Pelihahmo hahmo2) {
@@ -129,6 +144,7 @@ public class Peli {
         }
     }
 
+    // Jos pelaajan linna on olemassa (hp > 0), lisätään rahaa tuoton verran.
     private static void lisääRahat() {
         for (Pelaaja p : pelaajat) {
             if (p.rakennelma().annaHp() > 0) {
@@ -140,6 +156,8 @@ public class Peli {
         }
     }
 
+    // Pelataan, kunnes vain yksi on jäljellä.
+    // Voisi päivittää häviöön, kun pelaajan linna tuhotaan.
     private static void tarkistaPelinTila() {
         ArrayList<Integer> hävinneetPelaajat = new ArrayList<>();
         for (Pelaaja p : pelaajat) {
